@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using OnlineBankingApplication.Models;
+
 namespace OnlineBankingApplication
 {
     public class Program
@@ -8,6 +11,8 @@ namespace OnlineBankingApplication
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            var cs = builder.Configuration.GetConnectionString("conn");
+            builder.Services.AddDbContext<OnlineBankingDbContext>(Options => Options.UseSqlServer(cs));
 
             var app = builder.Build();
 
