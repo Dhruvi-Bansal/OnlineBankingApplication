@@ -11,78 +11,99 @@
         <div class="container">
 
             <h1 class="display-3 fw-bold mb-3">
-                Secure Online Banking
+                Secure Online Banking System
             </h1>
 
             <p class="lead mb-4">
-                Safe • Fast • Trusted Banking Services
+                Secure • Fast • Reliable Banking at Your Fingertips
             </p>
 
-            <a asp-controller="Account"
-               asp-action="Login"
-               class="btn btn-outline-light btn-lg px-4 fw-semibold" style="background-color:blanchedalmond; color:black">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Account"
+                   asp-action="Login"
+                   class="btn btn-light btn-lg px-4 me-2">
 
-                Customer Login
+                    Login
 
-            </a>
+                </a>
 
-            <a asp-controller="Admin"
-               asp-action="Login"
-               class="btn btn-outline-light btn-lg px-4 fw-semibold" style="background-color:blanchedalmond; color:black">
+                <a asp-controller="Account"
+                   asp-action="Register"
+                   class="btn btn-warning btn-lg px-4">
 
-                Admin Login
+                    Register
 
-            </a>
+                </a>
+            }
+            else
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Admin"
+                       asp-action="Dashboard"
+                       class="btn btn-warning btn-lg">
+
+                        Go to Admin Dashboard
+
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Customer"
+                       asp-action="Dashboard"
+                       class="btn btn-warning btn-lg">
+
+                        Go to Customer Dashboard
+
+                    </a>
+                }
+            }
 
         </div>
 
     </div>
 
-    <!-- Helpline -->
+    <!-- Contact -->
 
     <div class="container mt-4">
 
-        <div class="alert border-0 shadow-sm text-center"
-             style="background:#E0F2FE;color:#0F172A;">
+        <div class="alert alert-info text-center shadow-sm">
 
-            <strong>📞 Customer Care:</strong>
-            1800-123-4567
+            <strong>Customer Care:</strong> 1800-123-4567
 
-            <span class="mx-4">|</span>
+            &nbsp;&nbsp;|
 
-            <strong>Email:</strong>
-            support@onlinebank.com
+            <strong>Email:</strong> support@onlinebank.com
 
         </div>
 
     </div>
 
-    <!-- Services -->
+    <!-- Banking Services -->
 
     <div class="container py-5">
 
-        <h2 class="text-center fw-bold mb-5 text-dark">
-            Our Banking Services
+        <h2 class="text-center fw-bold mb-5">
+
+            Our Services
+
         </h2>
 
         <div class="row g-4">
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-md-3">
 
-                <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card shadow h-100">
 
-                    <div class="card-body py-5">
+                    <div class="card-body text-center">
 
-                        <div class="display-5 mb-3">
-                            💰
-                        </div>
+                        <h1>🏦</h1>
 
-                        <h5 class="fw-bold">
-                            Money Transfer
-                        </h5>
+                        <h5>Open Bank Account</h5>
 
-                        <p class="text-muted mb-0">
-                            Instant & secure transfers.
+                        <p>
+                            Open your savings or current account completely online.
                         </p>
 
                     </div>
@@ -91,22 +112,18 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-md-3">
 
-                <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card shadow h-100">
 
-                    <div class="card-body py-5">
+                    <div class="card-body text-center">
 
-                        <div class="display-5 mb-3">
-                            🏦
-                        </div>
+                        <h1>💸</h1>
 
-                        <h5 class="fw-bold">
-                            Open Account
-                        </h5>
+                        <h5>Fund Transfer</h5>
 
-                        <p class="text-muted mb-0">
-                            Open your account online.
+                        <p>
+                            Transfer money securely between bank accounts.
                         </p>
 
                     </div>
@@ -115,22 +132,18 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-md-3">
 
-                <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card shadow h-100">
 
-                    <div class="card-body py-5">
+                    <div class="card-body text-center">
 
-                        <div class="display-5 mb-3">
-                            💳
-                        </div>
+                        <h1>💳</h1>
 
-                        <h5 class="fw-bold">
-                            Bill Payment
-                        </h5>
+                        <h5>Bill Payments</h5>
 
-                        <p class="text-muted mb-0">
-                            Pay utilities anytime.
+                        <p>
+                            Pay electricity, gas, water and mobile bills.
                         </p>
 
                     </div>
@@ -139,22 +152,18 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-md-3">
 
-                <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card shadow h-100">
 
-                    <div class="card-body py-5">
+                    <div class="card-body text-center">
 
-                        <div class="display-5 mb-3">
-                            📒
-                        </div>
+                        <h1>📒</h1>
 
-                        <h5 class="fw-bold">
-                            Cheque Book
-                        </h5>
+                        <h5>Cheque Book</h5>
 
-                        <p class="text-muted mb-0">
-                            Request online in minutes.
+                        <p>
+                            Request a new cheque book online anytime.
                         </p>
 
                     </div>
@@ -167,27 +176,44 @@
 
     </div>
 
-    <!-- About -->
+    <!-- Features -->
 
-    <div class="container pb-5">
+    <div class="container py-5">
 
-        <div class="card border-0 shadow-lg">
+        <div class="row text-center">
 
-            <div class="card-body p-5">
+            <div class="col-md-4">
 
-                <h3 class="fw-bold mb-3 text-primary">
+                <h3>🔒</h3>
 
-                    About Our Bank
+                <h5>Secure Banking</h5>
 
-                </h3>
+                <p>
+                    Password hashing, Identity authentication and role-based authorization.
+                </p>
 
-                <p class="text-secondary fs-5 mb-0">
+            </div>
 
-                    Our Online Banking System offers secure banking services
-                    including fund transfers, bill payments, account management,
-                    fixed deposits, cheque book requests, and modern digital
-                    banking solutions designed for convenience and security.
+            <div class="col-md-4">
 
+                <h3>⚡</h3>
+
+                <h5>Fast Transactions</h5>
+
+                <p>
+                    Real-time balance updates and secure fund transfers.
+                </p>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <h3>📈</h3>
+
+                <h5>24×7 Banking</h5>
+
+                <p>
+                    Access your account from anywhere at any time.
                 </p>
 
             </div>
