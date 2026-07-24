@@ -1,80 +1,403 @@
 ﻿@model OnlineBankingApplication.ViewModels.RegisterVM
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Open Bank Account";
 }
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-5">
+<div class="container mt-4 mb-5">
 
-        <div class="card shadow">
+    <div class="card shadow">
 
-            <div class="card-header bg-primary text-white text-center">
-                <h3>Create Account</h3>
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Open New Bank Account</h2>
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-info">
+
+                <strong>Note:</strong>
+                Your application will be verified by the bank administrator.
+                You can login only after your account has been approved.
+
             </div>
 
-            <div class="card-body">
+            <form asp-action="Register" method="post">
 
-                <form asp-action="Register" method="post">
+                <div asp-validation-summary="All"
+                     class="text-danger mb-3">
+                </div>
 
-                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                <h4 class="text-primary mb-3">
+                    Personal Information
+                </h4>
 
-                    <div class="mb-3">
-                        <label asp-for="Name" class="form-label"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="FirstName" class="form-label"></label>
+
+                        <input asp-for="FirstName"
+                               class="form-control" />
+
+                        <span asp-validation-for="FirstName"
+                              class="text-danger"></span>
+
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="LastName"
+                               class="form-label"></label>
+
+                        <input asp-for="LastName"
+                               class="form-control" />
+
+                        <span asp-validation-for="LastName"
+                              class="text-danger"></span>
+
                     </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Phone" class="form-label"></label>
-                        <input asp-for="Phone" class="form-control" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="ConfirmPassword" class="form-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
-
-                    <button class="btn btn-primary w-100">
-                        Register
-                    </button>
-
-                </form>
-
-                <hr />
-
-                <div class="text-center">
-
-                    Already have an account?
-
-                    <a asp-action="Login">
-                        Login
-                    </a>
 
                 </div>
 
-            </div>
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="DOB"
+                               class="form-label"></label>
+
+                        <input asp-for="DOB"
+                               type="date"
+                               class="form-control" />
+
+                        <span asp-validation-for="DOB"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="Gender"
+                               class="form-label"></label>
+
+                        <select asp-for="Gender"
+                                class="form-select">
+
+                            <option value="">Select Gender</option>
+
+                            <option>Male</option>
+
+                            <option>Female</option>
+
+                            <option>Other</option>
+
+                        </select>
+
+                        <span asp-validation-for="Gender"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="Phone"
+                               class="form-label"></label>
+
+                        <input asp-for="Phone"
+                               class="form-control" />
+
+                        <span asp-validation-for="Phone"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <h4 class="text-primary mb-3">
+                    Identity Verification
+                </h4>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="AadhaarNumber"
+                               class="form-label"></label>
+
+                        <input asp-for="AadhaarNumber"
+                               class="form-control" />
+
+                        <span asp-validation-for="AadhaarNumber"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Pannumber"
+                               class="form-label"></label>
+
+                        <input asp-for="Pannumber"
+                               class="form-control"
+                               style="text-transform:uppercase" />
+
+                        <span asp-validation-for="Pannumber"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <h4 class="text-primary mb-3">
+                    Address Details
+                </h4>
+
+                <div class="mb-3">
+
+                    <label asp-for="Address"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Address"
+                              rows="3"
+                              class="form-control"></textarea>
+
+                    <span asp-validation-for="Address"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="City"
+                               class="form-label"></label>
+
+                        <input asp-for="City"
+                               class="form-control" />
+
+                        <span asp-validation-for="City"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="State" class="form-label"></label>
+
+                        <select asp-for="State" class="form-select">
+
+                            <option value="">Select State</option>
+
+                            <option>Andhra Pradesh</option>
+                            <option>Arunachal Pradesh</option>
+                            <option>Assam</option>
+                            <option>Bihar</option>
+                            <option>Chhattisgarh</option>
+                            <option>Goa</option>
+                            <option>Gujarat</option>
+                            <option>Haryana</option>
+                            <option>Himachal Pradesh</option>
+                            <option>Jharkhand</option>
+                            <option>Karnataka</option>
+                            <option>Kerala</option>
+                            <option>Madhya Pradesh</option>
+                            <option>Maharashtra</option>
+                            <option>Manipur</option>
+                            <option>Meghalaya</option>
+                            <option>Mizoram</option>
+                            <option>Nagaland</option>
+                            <option>Odisha</option>
+                            <option>Punjab</option>
+                            <option>Rajasthan</option>
+                            <option>Sikkim</option>
+                            <option>Tamil Nadu</option>
+                            <option>Telangana</option>
+                            <option>Tripura</option>
+                            <option>Uttar Pradesh</option>
+                            <option>Uttarakhand</option>
+                            <option>West Bengal</option>
+
+                            <option>Andaman and Nicobar Islands</option>
+                            <option>Chandigarh</option>
+                            <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                            <option>Delhi</option>
+                            <option>Jammu and Kashmir</option>
+                            <option>Ladakh</option>
+                            <option>Lakshadweep</option>
+                            <option>Puducherry</option>
+
+                        </select>
+
+                        <span asp-validation-for="State" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="Pincode"
+                               class="form-label"></label>
+
+                        <input asp-for="Pincode"
+                               class="form-control" />
+
+                        <span asp-validation-for="Pincode"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <h4 class="text-primary mb-3">
+                    Banking Details
+                </h4>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="AccountType"
+                               class="form-label"></label>
+
+                        <select asp-for="AccountType"
+                                class="form-select">
+
+                            <option value="">
+                                Select Account Type
+                            </option>
+
+                            <option>Savings</option>
+
+                            <option>Current</option>
+                            
+                            <option>Salary</option>
+
+                            <option>Fixed Deposit (FD)</option>
+
+                        </select>
+
+                        <span asp-validation-for="AccountType"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Branch" class="form-label"></label>
+
+                        <select asp-for="Branch" class="form-select">
+
+                            <option value="">Select Branch</option>
+
+                            <option>Delhi</option>
+
+                            <option>Noida</option>
+
+                            <option>Ghaziabad</option>
+
+                            <option>Greater Noida</option>
+
+                        </select>
+
+                        <span asp-validation-for="Branch"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <h4 class="text-primary mb-3">
+                    Login Credentials
+                </h4>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Email"
+                               class="form-label"></label>
+
+                        <input asp-for="Email"
+                               class="form-control" />
+
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Password"
+                               class="form-label"></label>
+
+                        <input asp-for="Password"
+                               class="form-control" />
+
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="ConfirmPassword"
+                               class="form-label"></label>
+
+                        <input asp-for="ConfirmPassword"
+                               class="form-control" />
+
+                        <span asp-validation-for="ConfirmPassword"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="d-grid mt-4">
+
+                    <button type="submit"
+                            class="btn btn-success btn-lg">
+
+                        Submit Registration
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="card-footer text-center">
+
+            Already registered?
+
+            <a asp-action="Login">
+                Login Here
+            </a>
 
         </div>
 
     </div>
+
 </div>
 
-@section Scripts {
+@section Scripts
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

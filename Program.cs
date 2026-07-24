@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineBankingApplication.DAL;
 using OnlineBankingApplication.Models;
+using OnlineBankingApplication.Repositories;
 
 namespace OnlineBankingApplication
 {
@@ -44,7 +45,7 @@ namespace OnlineBankingApplication
             });
 
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
             var app = builder.Build();
 
             // Seed Roles & Admin

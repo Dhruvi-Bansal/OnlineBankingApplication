@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBankingApplication.Models;
+using OnlineBankingApplication.Repositories;
 using OnlineBankingApplication.ViewModels;
 
 namespace OnlineBankingApplication.Controllers
@@ -10,15 +11,18 @@ namespace OnlineBankingApplication.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ICustomerRepo _customerRepo;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ICustomerRepo customerRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _customerRepo = customerRepo;
         }
 
         [HttpGet]
@@ -33,6 +37,7 @@ namespace OnlineBankingApplication.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            // Check if email already exists in Identity
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
             if (existingUser != null)
@@ -52,11 +57,34 @@ namespace OnlineBankingApplication.Controllers
 
             if (result.Succeeded)
             {
+                // Assign Customer Role
                 await _userManager.AddToRoleAsync(user, "Customer");
 
-                TempData["Success"] = "Registration Successful. Please Login.";
+                // Save Customer Details
+                Customer customer = new Customer
+                {
+                    UserId = user.Id,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Phone = model.Phone,
+                    AadhaarNumber = model.AadhaarNumber,
+                    Pannumber = model.Pannumber,
+                    Address = model.Address,
+                    City = model.City,
+                    State = model.State,
+                    Pincode = model.Pincode,
 
-                return RedirectToAction("Login");
+                    Status = "Pending"
+                };
+
+                await _customerRepo.AddCustomerAsync(customer);
+                await _customerRepo.SaveAsync();
+
+                TempData["Success"] =
+                    "Registration successful. Your account is pending admin approval.";
+
+                return RedirectToAction(nameof(Login));
             }
 
             foreach (var error in result.Errors)
@@ -79,6 +107,47 @@ namespace OnlineBankingApplication.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            // Find Identity User
+            var identityUser = await _userManager.FindByEmailAsync(model.Email);
+
+            if (identityUser == null)
+            {
+                ModelState.AddModelError("", "Invalid Email or Password.");
+                return View(model);
+            }
+
+            // Skip approval check for Admin
+            bool isAdmin = await _userManager.IsInRoleAsync(identityUser, "Admin");
+
+            if (!isAdmin)
+            {
+                var customer =
+                    await _customerRepo.GetCustomerByEmailAsync(model.Email);
+
+                if (customer == null)
+                {
+                    ModelState.AddModelError("", "Customer record not found.");
+                    return View(model);
+                }
+
+                if (customer.Status == "Pending")
+                {
+                    ModelState.AddModelError("",
+                        "Your registration is pending admin approval.");
+
+                    return View(model);
+                }
+
+                if (customer.Status == "Rejected")
+                {
+                    ModelState.AddModelError("",
+                        "Your registration has been rejected.");
+
+                    return View(model);
+                }
+            }
+
+            // Login
             var result = await _signInManager.PasswordSignInAsync(
                 model.Email,
                 model.Password,
@@ -87,19 +156,15 @@ namespace OnlineBankingApplication.Controllers
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-
-                if (await _userManager.IsInRoleAsync(user, "Admin"))
-                {
+                if (isAdmin)
                     return RedirectToAction("Dashboard", "Admin");
-                }
 
                 return RedirectToAction("Dashboard", "Customer");
             }
 
             if (result.IsLockedOut)
             {
-                ModelState.AddModelError("", "Account Locked. Try again later.");
+                ModelState.AddModelError("", "Account locked. Try again later.");
                 return View(model);
             }
 
@@ -112,7 +177,7 @@ namespace OnlineBankingApplication.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login");
+            return RedirectToAction(nameof(Login));
         }
 
         public IActionResult AccessDenied()
