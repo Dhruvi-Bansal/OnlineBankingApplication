@@ -361,3 +361,19 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+####################################################
+# ASP.NET Core User Secrets & Development Settings
+####################################################
+
+appsettings.Development.json
+secrets.json
+
+####################################################
+# Certificates
+####################################################
+
+*.pem
+*.key
+*.crt
