@@ -33,6 +33,10 @@ public partial class Customer
 
     public string? Pannumber { get; set; }
 
+    public string? AccountType { get; set; }
+
+    public string? Branch { get; set; }
+
     public string Status { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
@@ -40,4 +44,5 @@ public partial class Customer
     public virtual ICollection<BankAccount> BankAccounts { get; set; } = new List<BankAccount>();
 
     public virtual ICollection<Beneficiary> Beneficiaries { get; set; } = new List<Beneficiary>();
+    
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using OnlineBankingApplication.Models;
 
-namespace OnlineBankingApplication.Models;
+namespace OnlineBankingApplication.DAL;
 
 public partial class OnlineBankingDbContext : DbContext
 {

@@ -37,7 +37,6 @@ namespace OnlineBankingApplication.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            // Check if email already exists in Identity
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
             if (existingUser != null)
@@ -57,32 +56,51 @@ namespace OnlineBankingApplication.Controllers
 
             if (result.Succeeded)
             {
-                // Assign Customer Role
                 await _userManager.AddToRoleAsync(user, "Customer");
 
-                // Save Customer Details
                 Customer customer = new Customer
                 {
                     UserId = user.Id,
+
                     FirstName = model.FirstName,
+
                     LastName = model.LastName,
-                    Email = model.Email,
+
+                    Dob = DateOnly.FromDateTime(model.DOB),
+
+                    Gender = model.Gender,
+
                     Phone = model.Phone,
+
+                    Email = model.Email,
+
                     AadhaarNumber = model.AadhaarNumber,
+
                     Pannumber = model.Pannumber,
+
                     Address = model.Address,
+
                     City = model.City,
+
                     State = model.State,
+
                     Pincode = model.Pincode,
 
-                    Status = "Pending"
+                    AccountType = model.AccountType,
+
+                    Branch = model.Branch,
+
+                    Status = "Pending",
+
+                    CreatedAt = DateTime.Now
                 };
 
                 await _customerRepo.AddCustomerAsync(customer);
+
                 await _customerRepo.SaveAsync();
 
                 TempData["Success"] =
-                    "Registration successful. Your account is pending admin approval.";
+                    "Registration successful. Your account is pending administrator approval.";
 
                 return RedirectToAction(nameof(Login));
             }
@@ -183,6 +201,53 @@ namespace OnlineBankingApplication.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+        //=========================
+        // ADMIN LOGIN
+        //=========================
+
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AdminLogin(LoginVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid Email or Password.");
+                return View(model);
+            }
+
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+            if (!isAdmin)
+            {
+                ModelState.AddModelError("", "You are not an administrator.");
+                return View(model);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(
+                model.Email,
+                model.Password,
+                false,
+                true);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Dashboard", "Admin");
+            }
+
+            ModelState.AddModelError("", "Invalid Email or Password.");
+
+            return View(model);
         }
     }
 }

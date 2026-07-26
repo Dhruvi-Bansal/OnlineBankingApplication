@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineBankingApplication.ViewModels
 {
@@ -18,8 +19,7 @@ namespace OnlineBankingApplication.ViewModels
         public string Gender { get; set; }
 
         [Required]
-        [RegularExpression(@"^[6-9]\d{9}$",
-            ErrorMessage = "Enter a valid 10-digit mobile number.")]
+        [RegularExpression(@"^[6-9]\d{9}$")]
         public string Phone { get; set; }
 
         [Required]
@@ -27,13 +27,11 @@ namespace OnlineBankingApplication.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [RegularExpression(@"^\d{12}$",
-            ErrorMessage = "Aadhaar must be 12 digits.")]
+        [RegularExpression(@"^\d{12}$")]
         public string AadhaarNumber { get; set; }
 
         [Required]
-        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
-            ErrorMessage = "Invalid PAN format.")]
+        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]{1}$")]
         public string Pannumber { get; set; }
 
         [Required]
@@ -46,7 +44,6 @@ namespace OnlineBankingApplication.ViewModels
         public string State { get; set; }
 
         [Required]
-        [RegularExpression(@"^\d{6}$")]
         public string Pincode { get; set; }
 
         [Required]

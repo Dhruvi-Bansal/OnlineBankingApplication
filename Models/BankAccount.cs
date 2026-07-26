@@ -18,7 +18,7 @@ public partial class BankAccount
     public decimal Balance { get; set; }
 
     public string? Ifsccode { get; set; }
-
+    public string IFSCCode { get; internal set; }
     public string? BranchName { get; set; }
 
     public string? Status { get; set; }
