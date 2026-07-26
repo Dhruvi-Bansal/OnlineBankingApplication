@@ -1,0 +1,115 @@
+﻿@model IEnumerable<OnlineBankingApplication.Models.Beneficiary>
+
+@{
+    ViewData["Title"] = "My Beneficiaries";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+                My Beneficiaries
+            </h3>
+
+            <a asp-action="Add" class="btn btn-light">
+                <i class="bi bi-plus-circle"></i>
+                Add Beneficiary
+            </a>
+
+        </div>
+
+        <div class="card-body">
+
+            @if (Model.Any())
+            {
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-primary">
+
+                        <tr>
+
+                            <th>Name</th>
+
+                            <th>Nickname</th>
+
+                            <th>Account Number</th>
+
+                            <th>IFSC</th>
+
+                            <th>Added On</th>
+
+                            <th width="180">Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@item.BeneficiaryName</td>
+
+                                <td>@item.NickName</td>
+
+                                <td>
+
+                                    @(new string('X', item.AccountNumber.Length - 4)
+                                        + item.AccountNumber.Substring(item.AccountNumber.Length - 4))
+
+                                </td>
+
+                                <td>@item.Ifsccode</td>
+
+                                <td>
+
+                                    @(item.AddedDate?.ToString("dd MMM yyyy"))
+
+                                </td>
+
+                                <td>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.BeneficiaryId"
+                                       class="btn btn-warning btn-sm">
+
+                                        Edit
+
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@item.BeneficiaryId"
+                                       class="btn btn-danger btn-sm">
+
+                                        Delete
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">
+
+                    No beneficiaries added yet.
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

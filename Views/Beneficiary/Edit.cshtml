@@ -1,0 +1,87 @@
+﻿@model OnlineBankingApplication.Models.Beneficiary
+
+@{
+    ViewData["Title"] = "Edit Beneficiary";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Edit Beneficiary</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit">
+
+                <input asp-for="BeneficiaryId" type="hidden" />
+
+                <input asp-for="CustomerId" type="hidden" />
+
+                <input asp-for="AddedDate" type="hidden" />
+
+                <div class="mb-3">
+
+                    <label asp-for="BeneficiaryName"></label>
+
+                    <input asp-for="BeneficiaryName" class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="NickName"></label>
+
+                    <input asp-for="NickName" class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Account Number</label>
+
+                    <input asp-for="AccountNumber"
+                           class="form-control"
+                           readonly />
+
+                    <small class="text-muted">
+
+                        Account Number cannot be changed.
+
+                    </small>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Ifsccode"></label>
+
+                    <input asp-for="Ifsccode"
+                           class="form-control" />
+
+                </div>
+
+                <button class="btn btn-primary">
+
+                    Update
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

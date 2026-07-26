@@ -1,4 +1,5 @@
 ﻿using OnlineBankingApplication.Models;
+using OnlineBankingApplication.ViewModels;
 
 namespace OnlineBankingApplication.Repositories
 {
@@ -15,6 +16,8 @@ namespace OnlineBankingApplication.Repositories
         Task ApproveCustomerAsync(int customerId);
 
         Task RejectCustomerAsync(int customerId);
+
+        Task<CustomerDashboardVM> GetDashboard(string email);
 
         Task SaveAsync();
     }

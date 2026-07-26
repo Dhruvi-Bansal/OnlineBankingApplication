@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineBankingApplication.Models;
+using OnlineBankingApplication.ViewModels;
 
 namespace OnlineBankingApplication.Repositories
 {
@@ -60,5 +61,53 @@ namespace OnlineBankingApplication.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+
+        public async Task<CustomerDashboardVM> GetDashboard(string email)
+        {
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(x => x.Email == email);
+
+            if (customer == null)
+                return null;
+
+            var account = await _context.BankAccounts
+                .FirstOrDefaultAsync(x => x.CustomerId == customer.CustomerId);
+
+            var transactions = new List<Transaction>();
+
+            if (account != null)
+            {
+                transactions = await _context.Transactions
+                .Where(x => x.SenderAccountId == account.AccountId
+                  || x.ReceiverAccountId == account.AccountId)
+                 .OrderByDescending(x => x.TransactionDate)
+                                          .Take(5)
+                                          .ToListAsync();
+            }
+
+            return new CustomerDashboardVM
+            {
+                CustomerName = customer.FirstName + " " + customer.LastName,
+
+                Status = customer.Status,
+
+                AccountNumber = account == null ?
+                                "Pending Approval" :
+                                account.AccountNumber,
+
+                AccountType = account == null ?
+                              "Savings Account" :
+                              account.AccountType,
+
+                Balance = account == null ?
+                          0 :
+                          account.Balance,
+
+                RecentTransactions = transactions
+            };
+        }
+
+      
     }
 }
