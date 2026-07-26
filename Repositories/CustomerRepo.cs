@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineBankingApplication.DAL;
 using OnlineBankingApplication.Models;
 
 namespace OnlineBankingApplication.Repositories
@@ -34,6 +35,12 @@ namespace OnlineBankingApplication.Repositories
             return await _context.Customers
                 .Where(x => x.Status == "Pending")
                 .ToListAsync();
+        }
+
+        public async Task<Customer?> GetCustomerByIdAsync(int id)
+        {
+            return await _context.Customers
+                .FirstOrDefaultAsync(x => x.CustomerId == id);
         }
 
         public async Task ApproveCustomerAsync(int customerId)

@@ -15,6 +15,8 @@ namespace OnlineBankingApplication.Repositories
         Task ApproveCustomerAsync(int customerId);
 
         Task RejectCustomerAsync(int customerId);
+        Task<Customer?> GetCustomerByIdAsync(int id);
+
 
         Task SaveAsync();
     }

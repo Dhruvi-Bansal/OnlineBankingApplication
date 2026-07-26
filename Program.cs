@@ -46,6 +46,7 @@ namespace OnlineBankingApplication
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+            builder.Services.AddScoped<IBankAccountRepo, BankAccountRepo>();
             var app = builder.Build();
 
             // Seed Roles & Admin
