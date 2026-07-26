@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineBankingApplication.Models;
-
+using OnlineBankingApplication.DAL;
 namespace OnlineBankingApplication.Repositories
 {
     public class BeneficiaryRepo : IBeneficiaryRepo

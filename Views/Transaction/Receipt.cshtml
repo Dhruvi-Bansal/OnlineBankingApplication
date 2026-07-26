@@ -1,0 +1,173 @@
+﻿@model OnlineBankingApplication.Models.Transaction
+
+@{
+    ViewData["Title"] = "Transaction Receipt";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+
+            <h3>
+
+                Transaction Receipt
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered">
+
+                <tr>
+
+                    <th>
+
+                        Transaction Reference
+
+                    </th>
+
+                    <td>
+
+                        @Model.TransactionReference
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Date
+
+                    </th>
+
+                    <td>
+
+                        @Model.TransactionDate
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Sender Account
+
+                    </th>
+
+                    <td>
+
+                        @Model.SenderAccount?.AccountNumber
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Receiver Account
+
+                    </th>
+
+                    <td>
+
+                        @Model.ReceiverAccount?.AccountNumber
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Amount
+
+                    </th>
+
+                    <td>
+
+                        ₹ @Model.Amount
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Type
+
+                    </th>
+
+                    <td>
+
+                        @Model.TransactionType
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Status
+
+                    </th>
+
+                    <td>
+
+                        @Model.Status
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Remarks
+
+                    </th>
+
+                    <td>
+
+                        @Model.Description
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <button onclick="window.print()"
+                    class="btn btn-success">
+
+                Print Receipt
+
+            </button>
+
+            <a asp-action="History"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

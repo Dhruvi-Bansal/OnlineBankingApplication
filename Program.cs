@@ -47,7 +47,8 @@ namespace OnlineBankingApplication
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
             builder.Services.AddScoped<IBankAccountRepo, BankAccountRepo>();
-            builder.Services.AddScoped<IBeneficiaryRepo, BeneficiaryRepo>();
+            builder.Services.AddScoped<IBeneficiaryRepo, BeneficiaryRepo>();    
+            builder.Services.AddScoped<ITransactionRepo, TransactionRepo>();
             var app = builder.Build();
 
             // Seed Roles & Admin
@@ -65,7 +66,7 @@ namespace OnlineBankingApplication
 
             app.UseRouting();
 
-            app.UseAuthentication();      // Must come before Authorization
+            app.UseAuthentication();      
             app.UseAuthorization();
 
             app.MapStaticAssets();
