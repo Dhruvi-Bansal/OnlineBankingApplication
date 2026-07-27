@@ -41,7 +41,7 @@ namespace OnlineBankingApplication.Controllers
                 AccountNumber = accountNumber,
                 AccountType = customer.AccountType ?? "",
                 BranchName = customer.Branch ?? "",
-                IFSCCode = GenerateIFSC(customer.Branch ?? ""),
+               Ifsccode = GenerateIFSC(customer.Branch ?? ""),
                 Balance = 0,
                 Status = "Active",
                 OpenedDate = DateTime.Now
@@ -76,10 +76,10 @@ namespace OnlineBankingApplication.Controllers
                 "Ghaziabad" => "ONBK0001003",
                 "Greater Noida" => "ONBK0001004",
                 _ => "ONBK0000000"
-         
-         
+
+
             };
         }
-        
+
     }
 }

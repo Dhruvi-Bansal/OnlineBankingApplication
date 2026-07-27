@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineBankingApplication.DAL;
 using OnlineBankingApplication.Models;
 using OnlineBankingApplication.Repositories;
-using OnlineBankingApplication.DAL;
+
 namespace OnlineBankingApplication.Controllers
 {
     [Authorize(Roles = "Customer")]

@@ -44,5 +44,5 @@ public partial class Customer
     public virtual ICollection<BankAccount> BankAccounts { get; set; } = new List<BankAccount>();
 
     public virtual ICollection<Beneficiary> Beneficiaries { get; set; } = new List<Beneficiary>();
-    
+
 }
