@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using OnlineBankingApplication.Models;
 
-namespace OnlineBankingApplication.Models;
+namespace OnlineBankingApplication.DAL;
 
 public partial class OnlineBankingDbContext : DbContext
 {
@@ -84,7 +85,7 @@ public partial class OnlineBankingDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Balance).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.BranchName).HasMaxLength(100);
-            entity.Property(e => e.Ifsccode)
+            entity.Property(e => e.IFSCCode)
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("IFSCCode");

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineBankingApplication.Models;
+using OnlineBankingApplication.DAL;
+
 namespace OnlineBankingApplication.Controllers
 {
     public class BankController : Controller

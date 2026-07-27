@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineBankingApplication.Models;
+using OnlineBankingApplication.DAL;
 
 namespace OnlineBankingApplication.Repositories
 {
@@ -27,7 +28,7 @@ namespace OnlineBankingApplication.Repositories
 
             // IFSC Check
 
-            if (!string.Equals(account.Ifsccode,
+            if (!string.Equals(account.IFSCCode,
                                ifscCode,
                                StringComparison.OrdinalIgnoreCase))
             {

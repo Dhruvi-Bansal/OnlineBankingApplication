@@ -1,7 +1,7 @@
 ﻿@model OnlineBankingApplication.ViewModels.LoginVM
 
 @{
-    ViewData["Title"] = "Customer Login";
+    ViewData["Title"] = "Administrator Login";
 }
 
 <div class="container mt-5">
@@ -12,10 +12,10 @@
 
             <div class="card shadow-lg border-0">
 
-                <div class="card-header bg-primary text-white text-center py-3">
+                <div class="card-header bg-dark text-white text-center py-3">
 
                     <h2 class="mb-0">
-                        🏦 Customer Login
+                        🏦 Administrator Login
                     </h2>
 
                 </div>
@@ -30,10 +30,10 @@
                     }
 
                     <div asp-validation-summary="All"
-                         class="text-danger mb-3">
+                         class="alert alert-danger">
                     </div>
 
-                    <form asp-action="Login" method="post">
+                    <form asp-action="AdminLogin" method="post">
 
                         <div class="mb-3">
 
@@ -41,7 +41,7 @@
 
                             <input asp-for="Email"
                                    class="form-control"
-                                   placeholder="Enter Email Address" />
+                                   placeholder="Enter Administrator Email" />
 
                             <span asp-validation-for="Email"
                                   class="text-danger"></span>
@@ -63,7 +63,7 @@
                         </div>
 
                         <button type="submit"
-                                class="btn btn-primary w-100">
+                                class="btn btn-dark w-100">
 
                             Login
 
@@ -75,18 +75,13 @@
 
                 <div class="card-footer text-center">
 
-                    <p>
+                    <small class="text-danger fw-bold">
 
-                        Don't have an account?
+                        Authorized Bank Staff Only
 
-                        <a asp-action="Register"
-                           asp-controller="Account">
+                    </small>
 
-                            Register Here
-
-                        </a>
-
-                    </p>
+                    <br /><br />
 
                     <a asp-controller="Bank"
                        asp-action="Index"
