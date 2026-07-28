@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,5 +35,6 @@ ErrorMessage = "Invalid Account Number")]
 
     public DateTime? AddedDate { get; set; }
 
+    [ValidateNever]
     public virtual Customer Customer { get; set; } = null!;
 }

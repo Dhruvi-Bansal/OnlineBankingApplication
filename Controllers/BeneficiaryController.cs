@@ -44,6 +44,7 @@ namespace OnlineBankingApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Beneficiary beneficiary)
         {
+
             if (!ModelState.IsValid)
                 return View(beneficiary);
 
