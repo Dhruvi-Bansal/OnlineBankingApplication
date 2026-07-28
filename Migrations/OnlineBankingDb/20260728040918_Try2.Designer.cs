@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineBankingApplication.DAL;
 
@@ -11,9 +12,11 @@ using OnlineBankingApplication.DAL;
 namespace OnlineBankingApplication.Migrations.OnlineBankingDb
 {
     [DbContext(typeof(OnlineBankingDbContext))]
-    partial class OnlineBankingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260728040918_Try2")]
+    partial class Try2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

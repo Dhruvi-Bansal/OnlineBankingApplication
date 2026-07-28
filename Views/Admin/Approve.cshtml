@@ -1,0 +1,76 @@
+﻿@model OnlineBankingApplication.ViewModels.ApproveCustomerVM
+
+@{
+    ViewData["Title"] = "Approve Customer";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h3>Approve Customer</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Approve" method="post">
+
+                <input asp-for="CustomerId" type="hidden" />
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Customer
+                    </label>
+
+                    <input class="form-control"
+                           value="@Model.CustomerName"
+                           readonly />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="InitialDeposit"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="InitialDeposit"
+                           class="form-control" />
+
+                    <span asp-validation-for="InitialDeposit"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    Approve Account
+
+                </button>
+
+                <a asp-action="Dashboard"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
