@@ -1,21 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OnlineBankingApplication.ViewModels
 {
     public class TransferMoneyVM
     {
-        [Required]
-        [Display(Name = "Beneficiary")]
-        public int BeneficiaryId { get; set; }
+        [Required(ErrorMessage = "Receiver account number is required")]
+        public string ReceiverAccountNumber { get; set; }
 
-        [Required]
-        [Range(1, double.MaxValue)]
+
+        [Required(ErrorMessage = "Amount is required")]
+        [Range(1, double.MaxValue,
+            ErrorMessage = "Amount must be greater than zero")]
         public decimal Amount { get; set; }
 
-        [StringLength(200)]
-        public string? Description { get; set; }
 
-        public IEnumerable<SelectListItem>? Beneficiaries { get; set; }
+        public string? Description { get; set; }
     }
 }

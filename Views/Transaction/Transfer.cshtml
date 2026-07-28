@@ -4,9 +4,11 @@
     ViewData["Title"] = "Fund Transfer";
 }
 
+
 <div class="container mt-4">
 
     <div class="card shadow">
+
 
         <div class="card-header bg-primary text-white">
 
@@ -16,44 +18,48 @@
 
         </div>
 
+
         <div class="card-body">
+
 
             @if (TempData["Success"] != null)
             {
                 <div class="alert alert-success">
-
                     @TempData["Success"]
-
                 </div>
             }
 
+
             <form asp-action="Transfer" method="post">
+
 
                 <div asp-validation-summary="All"
                      class="text-danger mb-3">
                 </div>
 
+
+
                 <div class="mb-3">
 
-                    <label asp-for="BeneficiaryId"
+                    <label asp-for="ReceiverAccountNumber"
                            class="form-label">
+                        Receiver Account Number
                     </label>
 
-                    <select asp-for="BeneficiaryId"
-                            asp-items="Model.Beneficiaries"
-                            class="form-select">
 
-                        <option value="">
-                            Select Beneficiary
-                        </option>
+                    <input asp-for="ReceiverAccountNumber"
+                           class="form-control"
+                           placeholder="Enter receiver account number" />
 
-                    </select>
 
-                    <span asp-validation-for="BeneficiaryId"
+                    <span asp-validation-for="ReceiverAccountNumber"
                           class="text-danger">
                     </span>
 
                 </div>
+
+
+
 
                 <div class="mb-3">
 
@@ -61,8 +67,10 @@
                            class="form-label">
                     </label>
 
+
                     <input asp-for="Amount"
                            class="form-control" />
+
 
                     <span asp-validation-for="Amount"
                           class="text-danger">
@@ -70,11 +78,15 @@
 
                 </div>
 
+
+
+
                 <div class="mb-3">
 
                     <label asp-for="Description"
                            class="form-label">
                     </label>
+
 
                     <textarea asp-for="Description"
                               rows="3"
@@ -83,11 +95,15 @@
 
                 </div>
 
+
+
+
                 <button class="btn btn-success btn-lg">
 
                     Transfer Money
 
                 </button>
+
 
                 <a asp-action="History"
                    class="btn btn-secondary btn-lg">
@@ -96,13 +112,17 @@
 
                 </a>
 
+
             </form>
+
 
         </div>
 
     </div>
 
 </div>
+
+
 
 @section Scripts
 {

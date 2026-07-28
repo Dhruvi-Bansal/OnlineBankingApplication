@@ -21,18 +21,12 @@ namespace OnlineBankingApplication.Controllers
         //---------------------------------------------------------
 
         [HttpGet]
-        public async Task<IActionResult> Transfer()
+        public IActionResult Transfer()
         {
-            var vm = new TransferMoneyVM();
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            vm.Beneficiaries =
-                await _transactionRepo.GetBeneficiaries(userId!);
-
-
-            return View(vm);
+            return View(new TransferMoneyVM());
         }
+
+
 
         //---------------------------------------------------------
         // POST : Transfer
@@ -40,22 +34,28 @@ namespace OnlineBankingApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Transfer(TransferMoneyVM vm)
+        public async Task<IActionResult> Transfer(
+            TransferMoneyVM vm)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            vm.Beneficiaries =
-                await _transactionRepo.GetBeneficiaries(userId!);
 
             if (!ModelState.IsValid)
                 return View(vm);
 
+
+
+            var userId =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+
             bool success =
                 await _transactionRepo.TransferMoney(
                     userId!,
-                    vm.BeneficiaryId,
+                    vm.ReceiverAccountNumber,
                     vm.Amount,
                     vm.Description);
+
+
 
             if (success)
             {
@@ -65,8 +65,11 @@ namespace OnlineBankingApplication.Controllers
                 return RedirectToAction(nameof(History));
             }
 
+
+
             ModelState.AddModelError("",
-                "Transfer failed. Please verify the beneficiary and your account balance.");
+                "Transfer failed. Receiver account does not exist or insufficient balance.");
+
 
             return View(vm);
         }

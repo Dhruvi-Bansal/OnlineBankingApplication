@@ -15,28 +15,6 @@ namespace OnlineBankingApplication.Repositories
         }
 
         //----------------------------------------------------
-        // Load Beneficiaries
-        //----------------------------------------------------
-
-        public async Task<IEnumerable<SelectListItem>> GetBeneficiaries(string userId)
-        {
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(x => x.UserId == userId);
-
-            if (customer == null)
-                return new List<SelectListItem>();
-
-            return await _context.Beneficiaries
-                .Where(x => x.CustomerId == customer.CustomerId)
-                .Select(x => new SelectListItem
-                {
-                    Value = x.BeneficiaryId.ToString(),
-                    Text = x.BeneficiaryName + " - " + x.AccountNumber
-                })
-                .ToListAsync();
-        }
-
-        //----------------------------------------------------
         // Generate Transaction Reference
         //----------------------------------------------------
 
@@ -53,24 +31,32 @@ namespace OnlineBankingApplication.Repositories
 
         public async Task<bool> TransferMoney(
             string userId,
-            int beneficiaryId,
+            string receiverAccountNumber,
             decimal amount,
             string? description)
         {
+
             using var transaction =
                 await _context.Database.BeginTransactionAsync();
 
+
             try
             {
-                //------------------------------------------------
 
-                var customer = await _context.Customers
-                    .FirstOrDefaultAsync(x => x.UserId == userId);
+                var customer =
+                    await _context.Customers
+                    .FirstOrDefaultAsync(x =>
+                        x.UserId == userId);
+
+
 
                 if (customer == null)
                     return false;
 
-                //------------------------------------------------
+
+
+
+                // Sender account
 
                 var senderAccount =
                     await _context.BankAccounts
@@ -78,100 +64,126 @@ namespace OnlineBankingApplication.Repositories
                         x.CustomerId == customer.CustomerId &&
                         x.Status == "Active");
 
+
+
                 if (senderAccount == null)
                     return false;
 
-                //------------------------------------------------
 
-                var beneficiary =
-                    await _context.Beneficiaries
-                    .FirstOrDefaultAsync(x =>
-                        x.BeneficiaryId == beneficiaryId);
 
-                if (beneficiary == null)
-                    return false;
 
-                //------------------------------------------------
+                // Receiver account using account number
 
                 var receiverAccount =
                     await _context.BankAccounts
                     .FirstOrDefaultAsync(x =>
-                        x.AccountNumber == beneficiary.AccountNumber &&
+                        x.AccountNumber == receiverAccountNumber &&
                         x.Status == "Active");
+
+
 
                 if (receiverAccount == null)
                     return false;
 
-                //------------------------------------------------
 
-                if (senderAccount.AccountId == receiverAccount.AccountId)
+
+
+                // Same account transfer check
+
+                if (senderAccount.AccountId ==
+                   receiverAccount.AccountId)
+
                     return false;
 
-                //------------------------------------------------
+
+
 
                 if (amount <= 0)
                     return false;
 
-                //------------------------------------------------
+
+
 
                 if (senderAccount.Balance < amount)
                     return false;
 
-                //------------------------------------------------
-                // Debit Sender
-                //------------------------------------------------
+
+
+
+                // Debit
 
                 senderAccount.Balance -= amount;
 
-                //------------------------------------------------
-                // Credit Receiver
-                //------------------------------------------------
+
+
+                // Credit
 
                 receiverAccount.Balance += amount;
 
-                //------------------------------------------------
-                // Transaction Record
-                //------------------------------------------------
+
+
 
                 Transaction txn = new Transaction
                 {
-                    TransactionReference = GenerateReferenceNo(),
 
-                    SenderAccountId = senderAccount.AccountId,
+                    TransactionReference =
+                        GenerateReferenceNo(),
 
-                    ReceiverAccountId = receiverAccount.AccountId,
+
+                    SenderAccountId =
+                        senderAccount.AccountId,
+
+
+                    ReceiverAccountId =
+                        receiverAccount.AccountId,
+
 
                     Amount = amount,
 
-                    TransactionType = "Fund Transfer",
 
-                    Description = description,
+                    TransactionType =
+                        "Fund Transfer",
 
-                    Status = "Success",
 
-                    TransactionDate = DateTime.Now
+                    Description =
+                        description,
+
+
+                    Status =
+                        "Success",
+
+
+                    TransactionDate =
+                        DateTime.Now
+
                 };
+
+
 
                 _context.Transactions.Add(txn);
 
-                //------------------------------------------------
 
-                _context.BankAccounts.Update(senderAccount);
-
-                _context.BankAccounts.Update(receiverAccount);
 
                 await _context.SaveChangesAsync();
 
+
+
                 await transaction.CommitAsync();
 
+
+
                 return true;
+
             }
             catch
             {
+
                 await transaction.RollbackAsync();
 
                 return false;
+
             }
+
         }
 
         //----------------------------------------------------

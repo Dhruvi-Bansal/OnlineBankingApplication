@@ -5,11 +5,10 @@ namespace OnlineBankingApplication.Repositories
 {
     public interface ITransactionRepo
     {
-        Task<IEnumerable<SelectListItem>> GetBeneficiaries(string userId);
 
-        Task<bool> TransferMoney(
+        public Task<bool> TransferMoney(
             string userId,
-            int beneficiaryId,
+            string receiverAccountNumber,
             decimal amount,
             string? description);
 
