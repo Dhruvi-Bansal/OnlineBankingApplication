@@ -34,7 +34,7 @@ namespace OnlineBankingApplication.Repositories
         public async Task<IEnumerable<Customer>> GetPendingCustomersAsync()
         {
             return await _context.Customers
-                .Where(x => x.Status == "Pending")
+                .Where(c => c.Status == "Pending")
                 .ToListAsync();
         }
 

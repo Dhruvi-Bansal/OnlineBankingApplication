@@ -19,9 +19,22 @@ namespace OnlineBankingApplication.Controllers
             _accountRepo = accountRepo;
         }
 
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
-            return View(new List<Customer>());
+            var customers = await _customerRepo.GetPendingCustomersAsync();
+
+            return View(customers);
+        }
+        private int GetProductId(string accountType)
+        {
+            return accountType switch
+            {
+                "Savings" => 1,
+                "Current" => 2,
+                "Salary" => 3,
+               
+                _ => 1
+            };
         }
 
         public async Task<IActionResult> Approve(int id)
@@ -35,18 +48,35 @@ namespace OnlineBankingApplication.Controllers
 
             string accountNumber = await _accountRepo.GenerateAccountNumber();
 
+            // Generate IFSC first
+            string ifsc = GenerateIFSC(customer.Branch ?? "");
+
+            // Check whether IFSC is generated
+            if (string.IsNullOrWhiteSpace(ifsc))
+            {
+                throw new Exception("IFSC Code is NULL");
+            }
+
             BankAccount account = new BankAccount
             {
                 CustomerId = customer.CustomerId,
+
+                ProductId = GetProductId(customer.AccountType ?? ""),
+
                 AccountNumber = accountNumber,
+
                 AccountType = customer.AccountType ?? "",
+
                 BranchName = customer.Branch ?? "",
-               Ifsccode = GenerateIFSC(customer.Branch ?? ""),
+
+                Ifsccode = GenerateIFSC(customer.Branch ?? ""),
+
                 Balance = 0,
+
                 Status = "Active",
+
                 OpenedDate = DateTime.Now
             };
-
             await _accountRepo.CreateAccountAsync(account);
 
             await _customerRepo.SaveAsync();
@@ -69,16 +99,23 @@ namespace OnlineBankingApplication.Controllers
 
         private string GenerateIFSC(string branch)
         {
-            return branch switch
+            switch (branch)
             {
-                "Delhi" => "ONBK0001001",
-                "Noida" => "ONBK0001002",
-                "Ghaziabad" => "ONBK0001003",
-                "Greater Noida" => "ONBK0001004",
-                _ => "ONBK0000000"
+                case "Delhi":
+                    return "ONBK0001001";
 
+                case "Noida":
+                    return "ONBK0001002";
 
-            };
+                case "Ghaziabad":
+                    return "ONBK0001003";
+
+                case "Greater Noida":
+                    return "ONBK0001004";
+
+                default:
+                    return "ONBK0000000";
+            }
         }
 
     }
