@@ -3,25 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineBankingApplication.Models;
 using OnlineBankingApplication.Repositories;
 using OnlineBankingApplication.ViewModels;
+
   
 
 namespace OnlineBankingApplication.Controllers
 {
+ 
     [Authorize(Roles = "Admin")]
+
     public class AdminController : Controller
     {
         private readonly ICustomerRepo _customerRepo;
         private readonly IBankAccountRepo _accountRepo;
         private readonly IChequeBookRepo _chequeRepo;
+        private readonly IProfileUpdateRepo _profileRepo;
 
         public AdminController(
             ICustomerRepo customerRepo,
             IBankAccountRepo accountRepo,
-            IChequeBookRepo chequeRepo)
+            IChequeBookRepo chequeRepo,
+             IProfileUpdateRepo profileRepo)
         {
             _customerRepo = customerRepo;
             _accountRepo = accountRepo;
             _chequeRepo = chequeRepo;
+            _profileRepo = profileRepo;
         }
 
         public async Task<IActionResult> Dashboard()
@@ -174,6 +180,32 @@ namespace OnlineBankingApplication.Controllers
                 default:
                     return "ONBK0000000";
             }
+        }
+        public async Task<IActionResult> ProfileRequests()
+        {
+            var requests = await _profileRepo.GetPendingRequests();
+
+            return View(requests);
+        }
+        public async Task<IActionResult> ApproveProfileRequest(int id)
+        {
+            await _profileRepo.Approve(id);
+
+            await _profileRepo.Save();
+
+            TempData["Success"] = "Profile updated successfully.";
+
+            return RedirectToAction(nameof(ProfileRequests));
+        }
+        public async Task<IActionResult> RejectProfileRequest(int id)
+        {
+            await _profileRepo.Reject(id);
+
+            await _profileRepo.Save();
+
+            TempData["Success"] = "Profile update request rejected.";
+
+            return RedirectToAction(nameof(ProfileRequests));
         }
 
     }

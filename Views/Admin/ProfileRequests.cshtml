@@ -1,0 +1,172 @@
+﻿@model IEnumerable<OnlineBankingApplication.Models.ProfileUpdateRequest>
+
+@{
+    ViewData["Title"] = "Profile Update Requests";
+}
+
+<!-- ==========================================================
+PROFILE FEATURE
+Admin - Pending Profile Update Requests
+========================================================== -->
+
+<h2 class="mb-4">
+
+    Pending Profile Update Requests
+
+</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+
+        @TempData["Success"]
+
+    </div>
+}
+
+@if (Model.Any())
+{
+    <table class="table table-bordered table-striped align-middle">
+
+        <thead class="table-primary">
+
+            <tr>
+
+                <th>Customer</th>
+
+                <th>Current Phone</th>
+
+                <th>Requested Phone</th>
+
+                <th>Current Address</th>
+
+                <th>Requested Address</th>
+
+                <th>Requested On</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <!-- ==========================================================
+                PROFILE FEATURE
+                Customer Name
+                ========================================================== -->
+
+                <td>
+
+                    @item.Customer.FirstName @item.Customer.LastName
+
+                </td>
+
+                <!-- Existing Phone -->
+
+                <td>
+
+                    @item.Customer.Phone
+
+                </td>
+
+                <!-- Requested Phone -->
+
+                <td>
+
+                    @if (!string.IsNullOrWhiteSpace(item.NewPhone))
+                    {
+                        <span class="text-primary fw-bold">
+
+                            @item.NewPhone
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">
+
+                            No Change
+
+                        </span>
+                    }
+
+                </td>
+
+                <!-- Existing Address -->
+
+                <td>
+
+                    @item.Customer.Address
+
+                </td>
+
+                <!-- Requested Address -->
+
+                <td>
+
+                    @if (!string.IsNullOrWhiteSpace(item.NewAddress))
+                    {
+                        <span class="text-primary fw-bold">
+
+                            @item.NewAddress
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">
+
+                            No Change
+
+                        </span>
+                    }
+
+                </td>
+
+                <td>
+
+                    @item.RequestDate.ToString("dd MMM yyyy hh:mm tt")
+
+                </td>
+
+                <td>
+
+                    <a asp-action="ApproveProfileRequest"
+                       asp-route-id="@item.RequestId"
+                       class="btn btn-success btn-sm">
+
+                        Approve
+
+                    </a>
+
+                    <a asp-action="RejectProfileRequest"
+                       asp-route-id="@item.RequestId"
+                       class="btn btn-danger btn-sm">
+
+                        Reject
+
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+
+        No pending profile update requests.
+
+    </div>
+}
