@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineBankingApplication.DAL;
 using OnlineBankingApplication.Models;
 using OnlineBankingApplication.Repositories;
+using OnlineBankingApplication.Repositories.Interfaces;
 
 namespace OnlineBankingApplication
 {
@@ -52,6 +53,7 @@ namespace OnlineBankingApplication
             builder.Services.AddScoped<IBeneficiaryRepo, BeneficiaryRepo>();    
             builder.Services.AddScoped<ITransactionRepo, TransactionRepo>();
             builder.Services.AddScoped<IProfileRepo, ProfileRepo>();
+            builder.Services.AddScoped<IBillPaymentRepo, BillPaymentRepo>();
             builder.Services.AddScoped<IProfileUpdateRepo, ProfileUpdateRepo>();
 
             var app = builder.Build();

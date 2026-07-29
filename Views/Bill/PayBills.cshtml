@@ -1,0 +1,159 @@
+﻿@model OnlineBankingApplication.ViewModels.PayBillVM
+
+@{
+    ViewData["Title"] = "Pay Utility Bill";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Utility Bill Payment</h3>
+        </div>
+
+        <div class="card-body">
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+
+            <form asp-action="PayBills" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AccountNumber"
+                               class="form-label"></label>
+
+                        <input asp-for="AccountNumber"
+                               class="form-control" />
+
+                        <span asp-validation-for="AccountNumber"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="BillType"
+                               class="form-label"></label>
+
+                        <select asp-for="BillType"
+                                class="form-select">
+
+                            <option value="">Select Bill Type</option>
+                            <option>Electricity</option>
+                            <option>Water</option>
+                            <option>Gas</option>
+                            <option>Broadband</option>
+                            <option>Mobile</option>
+                            <option>DTH</option>
+
+                        </select>
+
+                        <span asp-validation-for="BillType"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="ProviderName"
+                               class="form-label"></label>
+
+                        <input asp-for="ProviderName"
+                               class="form-control" />
+
+                        <span asp-validation-for="ProviderName"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="CustomerNumber"
+                               class="form-label"></label>
+
+                        <input asp-for="CustomerNumber"
+                               class="form-control" />
+
+                        <span asp-validation-for="CustomerNumber"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="Amount"
+                               class="form-label"></label>
+
+                        <input asp-for="Amount"
+                               class="form-control" />
+
+                        <span asp-validation-for="Amount"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="DueDate"
+                               class="form-label"></label>
+
+                        <input asp-for="DueDate"
+                               class="form-control" />
+
+                        <span asp-validation-for="DueDate"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="Password"
+                               class="form-label"></label>
+
+                        <input asp-for="Password"
+                               class="form-control" />
+
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success">
+                    Pay Bill
+                </button>
+
+                <a asp-action="History"
+                   class="btn btn-secondary ms-2">
+                    Payment History
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -178,9 +178,10 @@ namespace OnlineBankingApplication.Repositories
             catch
             {
 
+               
                 await transaction.RollbackAsync();
 
-                return false;
+                return false ;
 
             }
 
@@ -229,6 +230,6 @@ namespace OnlineBankingApplication.Repositories
                 .FirstOrDefaultAsync(x =>
                     x.TransactionId == id);
         }
-        
+
     }
 }
