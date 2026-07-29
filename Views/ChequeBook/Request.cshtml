@@ -1,0 +1,79 @@
+﻿@model OnlineBankingApplication.Models.Customer
+
+@{
+    ViewData["Title"] = "Cheque Book Request";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Cheque Book Request</h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-info">
+                <strong>Your cheque book will be delivered to the following address.</strong>
+            </div>
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="30%">Customer Name</th>
+                    <td>@Model.FirstName @Model.LastName</td>
+                </tr>
+
+                <tr>
+                    <th>Account Type</th>
+                    <td>@Model.AccountType</td>
+                </tr>
+
+                <tr>
+                    <th>Branch</th>
+                    <td>@Model.Branch</td>
+                </tr>
+
+                <tr>
+                    <th>Mobile</th>
+                    <td>@Model.Phone</td>
+                </tr>
+
+                <tr>
+                    <th>Address</th>
+                    <td>
+                        @Model.Address <br />
+                        @Model.City, @Model.State <br />
+                        PIN - @Model.Pincode
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="alert alert-warning">
+                <b>Note:</b> Your cheque book will be shipped to the above address within
+                <strong>5-7 working days.</strong>
+            </div>
+
+            <form asp-action="ConfirmRequest" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <button type="submit" class="btn btn-success">
+                    Confirm Request
+                </button>
+
+                <a asp-controller="Customer"
+                   asp-action="Dashboard"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -34,9 +34,11 @@ namespace OnlineBankingApplication
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             })
+
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-            
+            builder.Services.AddScoped<IChequeBookRepo, ChequeBookRepo>();
+
 
             builder.Services.ConfigureApplicationCookie(options =>
             {

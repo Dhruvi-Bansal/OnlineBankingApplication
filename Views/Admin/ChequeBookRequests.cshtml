@@ -1,0 +1,78 @@
+﻿@model IEnumerable<OnlineBankingApplication.Models.ChequeBookRequest>
+
+<h2>Cheque Book Requests</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<table class="table table-bordered">
+
+    <thead>
+
+        <tr>
+
+            <th>Customer</th>
+
+            <th>Account Number</th>
+
+            <th>Branch</th>
+
+            <th>Request Date</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @item.Account.Customer.FirstName
+                    @item.Account.Customer.LastName
+                </td>
+
+                <td>@item.Account.AccountNumber</td>
+
+                <td>@item.Account.BranchName</td>
+
+                <td>@item.RequestDate</td>
+
+                <td>@item.Status</td>
+
+                <td>
+
+                    <a asp-action="ApproveCheque"
+                       asp-route-id="@item.RequestId"
+                       class="btn btn-success">
+
+                        Approve
+
+                    </a>
+
+                    <a asp-action="RejectCheque"
+                       asp-route-id="@item.RequestId"
+                       class="btn btn-danger">
+
+                        Reject
+
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

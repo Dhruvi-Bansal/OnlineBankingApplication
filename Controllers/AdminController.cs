@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineBankingApplication.Models;
 using OnlineBankingApplication.Repositories;
 using OnlineBankingApplication.ViewModels;
+  
 
 namespace OnlineBankingApplication.Controllers
 {
@@ -11,13 +12,16 @@ namespace OnlineBankingApplication.Controllers
     {
         private readonly ICustomerRepo _customerRepo;
         private readonly IBankAccountRepo _accountRepo;
+        private readonly IChequeBookRepo _chequeRepo;
 
         public AdminController(
             ICustomerRepo customerRepo,
-            IBankAccountRepo accountRepo)
+            IBankAccountRepo accountRepo,
+            IChequeBookRepo chequeRepo)
         {
             _customerRepo = customerRepo;
             _accountRepo = accountRepo;
+            _chequeRepo = chequeRepo;
         }
 
         public async Task<IActionResult> Dashboard()
@@ -38,55 +42,7 @@ namespace OnlineBankingApplication.Controllers
             };
         }
 
-        //public async Task<IActionResult> Approve(int id)
-        //{
-        //    var customer = await _customerRepo.GetCustomerByIdAsync(id);
-
-        //    if (customer == null)
-        //        return NotFound();
-
-        //    customer.Status = "Approved";
-
-        //    string accountNumber = await _accountRepo.GenerateAccountNumber();
-
-        //    // Generate IFSC first
-        //    string ifsc = GenerateIFSC(customer.Branch ?? "");
-
-        //    // Check whether IFSC is generated
-        //    if (string.IsNullOrWhiteSpace(ifsc))
-        //    {
-        //        throw new Exception("IFSC Code is NULL");
-        //    }
-
-        //    BankAccount account = new BankAccount
-        //    {
-        //        CustomerId = customer.CustomerId,
-
-        //        ProductId = GetProductId(customer.AccountType ?? ""),
-
-        //        AccountNumber = accountNumber,
-
-        //        AccountType = customer.AccountType ?? "",
-
-        //        BranchName = customer.Branch ?? "",
-
-        //        Ifsccode = GenerateIFSC(customer.Branch ?? ""),
-
-        //        Balance = 0,
-
-        //        Status = "Active",
-
-        //        OpenedDate = DateTime.Now
-        //    };
-        //    await _accountRepo.CreateAccountAsync(account);
-
-        //    await _customerRepo.SaveAsync();
-        //    await _accountRepo.SaveAsync();
-
-        //    TempData["Success"] = "Customer Approved Successfully.";
-
-        //    return RedirectToAction(nameof(Dashboard));
-        //}
+     
         [HttpGet]
         public async Task<IActionResult> Approve(int id)
         {
@@ -158,6 +114,45 @@ namespace OnlineBankingApplication.Controllers
             TempData["Success"] = "Customer Rejected.";
 
             return RedirectToAction(nameof(Dashboard));
+        }
+       
+
+    
+        public async Task<IActionResult> ChequeBookRequests()
+        {
+            var requests = await _chequeRepo.GetPendingRequestsAsync();
+
+            return View(requests);
+        }
+        public async Task<IActionResult> ApproveCheque(int id)
+        {
+            var request = await _chequeRepo.GetRequestByIdAsync(id);
+
+            if (request == null)
+                return NotFound();
+
+            request.Status = "Approved";
+
+            await _chequeRepo.SaveAsync();
+
+            TempData["Success"] = "Cheque Book Request Approved.";
+
+            return RedirectToAction(nameof(ChequeBookRequests));
+        }
+        public async Task<IActionResult> RejectCheque(int id)
+        {
+            var request = await _chequeRepo.GetRequestByIdAsync(id);
+
+            if (request == null)
+                return NotFound();
+
+            request.Status = "Rejected";
+
+            await _chequeRepo.SaveAsync();
+
+            TempData["Success"] = "Cheque Book Request Rejected.";
+
+            return RedirectToAction(nameof(ChequeBookRequests));
         }
 
         private string GenerateIFSC(string branch)

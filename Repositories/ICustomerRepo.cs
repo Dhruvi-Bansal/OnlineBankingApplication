@@ -10,6 +10,7 @@ namespace OnlineBankingApplication.Repositories
         Task<Customer?> GetCustomerByEmailAsync(string email);
 
         Task<Customer?> GetCustomerByUserIdAsync(string userId);
+       
 
         Task<IEnumerable<Customer>> GetPendingCustomersAsync();
 

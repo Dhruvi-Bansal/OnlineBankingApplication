@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OnlineBankingApplication.Models;
 
-public partial class ChequeBookRequest
+public class ChequeBookRequest
 {
     public int RequestId { get; set; }
 

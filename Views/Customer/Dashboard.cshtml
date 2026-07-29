@@ -215,11 +215,28 @@
                     </a>
                 </div>
 
+               
+                <a asp-controller="ChequeBook"
+                   asp-action="Request"
+                   class="quick-btn">
+
+                    <i class="bi bi-journal-bookmark me-2"></i>
+
+                    Request Cheque Book
+
+                </a>
                 <div class="col-md-4">
-                    <a asp-controller="ChequeBook" asp-action="Request" class="quick-btn">
-                        <i class="bi bi-journal-bookmark me-2"></i> Cheque Book
+                    <a asp-controller="ChequeBook"
+                       asp-action="Status"
+                       class="quick-btn">
+
+                        <i class="bi bi-journal-bookmark-fill me-2"></i>
+
+                        Cheque Book Status
+
                     </a>
                 </div>
+
 
                 <div class="col-md-4">
                     <a asp-controller="Transaction" asp-action="History" class="quick-btn">

@@ -1,76 +1,116 @@
-﻿@model OnlineBankingApplication.ViewModels.ApproveCustomerVM
+﻿@model IEnumerable<OnlineBankingApplication.Models.Customer>
 
 @{
-    ViewData["Title"] = "Approve Customer";
+    ViewData["Title"] = "Customer Approval";
 }
 
-<div class="container mt-4">
+<h2 class="mb-4 text-primary">
+    Pending Customer Requests
+</h2>
 
-    <div class="card shadow">
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
 
-        <div class="card-header bg-success text-white">
+<div class="card shadow">
 
-            <h3>Approve Customer</h3>
+    <div class="card-header bg-primary text-white">
 
-        </div>
+        Customer Registration Requests
 
-        <div class="card-body">
+    </div>
 
-            <form asp-action="Approve" method="post">
+    <div class="card-body">
 
-                <input asp-for="CustomerId" type="hidden" />
+        <table class="table table-hover table-bordered align-middle">
 
-                <div class="mb-3">
+            <thead class="table-light">
 
-                    <label class="form-label">
-                        Customer
-                    </label>
+                <tr>
 
-                    <input class="form-control"
-                           value="@Model.CustomerName"
-                           readonly />
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Account</th>
+                    <th>Branch</th>
+                    <th>Status</th>
+                    <th width="180">Action</th>
 
-                </div>
+                </tr>
 
-                <div class="mb-3">
+            </thead>
 
-                    <label asp-for="InitialDeposit"
-                           class="form-label">
-                    </label>
+            <tbody>
 
-                    <input asp-for="InitialDeposit"
-                           class="form-control" />
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
 
-                    <span asp-validation-for="InitialDeposit"
-                          class="text-danger">
-                    </span>
+                            <td>@item.FirstName @item.LastName</td>
 
-                </div>
+                            <td>@item.Email</td>
 
-                <button class="btn btn-success">
+                            <td>@item.Phone</td>
 
-                    Approve Account
+                            <td>@item.AccountType</td>
 
-                </button>
+                            <td>@item.Branch</td>
 
-                <a asp-action="Dashboard"
-                   class="btn btn-secondary">
+                            <td>
 
-                    Cancel
+                                <span class="badge bg-warning text-dark">
 
-                </a>
+                                    @item.Status
 
-            </form>
+                                </span>
 
-        </div>
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Approve"
+                                   asp-route-id="@item.CustomerId"
+                                   class="btn btn-success btn-sm">
+
+                                    ✔ Approve
+
+                                </a>
+
+                                <a asp-action="Reject"
+                                   asp-route-id="@item.CustomerId"
+                                   class="btn btn-danger btn-sm">
+
+                                    ✖ Reject
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            No Pending Customers
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
 
     </div>
 
 </div>
-
-@section Scripts
-{
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

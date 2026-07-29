@@ -18,6 +18,12 @@ namespace OnlineBankingApplication.Repositories
             await _context.BankAccounts.AddAsync(account);
         }
 
+        public async Task<BankAccount?> GetAccountByCustomerId(int customerId)
+        {
+            return await _context.BankAccounts
+                .FirstOrDefaultAsync(x => x.CustomerId == customerId);
+        }
+
         public async Task<string> GenerateAccountNumber()
         {
             Random random = new Random();
