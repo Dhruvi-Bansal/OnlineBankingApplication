@@ -1,0 +1,267 @@
+﻿@model OnlineBankingApplication.ViewModels.ProfileVM
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<!-- ==========================================================
+PROFILE FEATURE
+Custom Profile Page
+========================================================== -->
+
+<style>
+    .profile-card {
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .section-title {
+        color: #0B4F8C;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    /* ==========================================================
+           MODIFIED
+           Read-only fields should not look editable
+        ========================================================== */
+
+    .readonly-box {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: .55rem .75rem;
+        cursor: default;
+        user-select: text;
+    }
+
+    .pending-box {
+        background: #fff8e1;
+        border-left: 5px solid orange;
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .requested-value {
+        color: #0B4F8C;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="card profile-card">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3 class="mb-0">
+                My Profile
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <!-- ==========================================================
+            SUCCESS MESSAGE
+            ========================================================== -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+
+            <!-- ==========================================================
+            ERROR MESSAGE
+            ========================================================== -->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <div class="row">
+
+                <!-- LEFT COLUMN -->
+
+                <div class="col-md-6">
+
+                    <h5 class="section-title">
+                        Personal Information
+                    </h5>
+
+                    <label>First Name</label>
+                    <div class="readonly-box">
+                        @Model.FirstName
+                    </div>
+
+                    <br />
+
+                    <label>Last Name</label>
+                    <div class="readonly-box">
+                        @Model.LastName
+                    </div>
+
+                    <br />
+
+                    <label>Email</label>
+                    <div class="readonly-box">
+                        @Model.Email
+                    </div>
+
+                    <br />
+
+                    <label>Date of Birth</label>
+                    <div class="readonly-box">
+                        @(Model.Dob?.ToString("dd MMM yyyy"))
+                    </div>
+
+                    <br />
+
+                    <label>Gender</label>
+                    <div class="readonly-box">
+                        @Model.Gender
+                    </div>
+
+                    <br />
+
+                    <label>PAN</label>
+                    <div class="readonly-box">
+                        @Model.Pannumber
+                    </div>
+
+                    <br />
+
+                    <label>Aadhaar</label>
+                    <div class="readonly-box">
+                        @Model.AadhaarNumber
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN -->
+
+                <div class="col-md-6">
+
+                    <h5 class="section-title">
+                        Banking Information
+                    </h5>
+
+                    <label>Account Type</label>
+                    <div class="readonly-box">
+                        @Model.AccountType
+                    </div>
+
+                    <br />
+
+                    <label>Branch</label>
+                    <div class="readonly-box">
+                        @Model.Branch
+                    </div>
+
+                    <br />
+
+                    <label>Phone Number</label>
+                    <div class="readonly-box">
+                        @Model.Phone
+                    </div>
+
+                    <!-- ==========================================================
+                    PROFILE FEATURE
+                    Show pending phone only if request exists
+                    ========================================================== -->
+                    @if (Model.HasPendingRequest &&
+                                        !string.IsNullOrWhiteSpace(Model.PendingPhone) &&
+                                        Model.PendingPhone != Model.Phone)
+                    {
+                        <div class="pending-box mt-2">
+
+                            <strong class="text-warning">
+                                Pending Approval
+                            </strong>
+
+                            <br />
+
+                            Requested Phone
+
+                            <div class="requested-value">
+                                @Model.PendingPhone
+                            </div>
+
+                        </div>
+                    }
+
+                    <br />
+
+                    <label>Address</label>
+
+                    <div class="readonly-box">
+                        @Model.Address
+                    </div>
+
+                    <!-- ==========================================================
+                    PROFILE FEATURE
+                    Show pending address only if request exists
+                    ========================================================== -->
+                    @if (Model.HasPendingRequest &&
+                                        !string.IsNullOrWhiteSpace(Model.PendingAddress) &&
+                                        Model.PendingAddress != Model.Address)
+                    {
+                        <div class="pending-box mt-2">
+
+                            <strong class="text-warning">
+                                Pending Approval
+                            </strong>
+
+                            <br />
+
+                            Requested Address
+
+                            <div class="requested-value">
+                                @Model.PendingAddress
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="text-end">
+
+                <!-- ==========================================================
+                PROFILE FEATURE
+                Disable Edit button if request is pending
+                ========================================================== -->
+                @if (Model.HasPendingRequest)
+                {
+                    <button class="btn btn-secondary" disabled>
+                        Update Request Pending
+                    </button>
+                }
+                else
+                {
+                    <a asp-action="Edit"
+                       class="btn btn-primary">
+                        Edit Profile
+                    </a>
+                }
+
+                <a asp-controller="Customer"
+                   asp-action="Dashboard"
+                   class="btn btn-outline-secondary">
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

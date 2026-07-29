@@ -215,7 +215,7 @@
                     </a>
                 </div>
 
-               
+                <div class="col-md-4">
                 <a asp-controller="ChequeBook"
                    asp-action="Request"
                    class="quick-btn">
@@ -225,6 +225,8 @@
                     Request Cheque Book
 
                 </a>
+                </div>
+
                 <div class="col-md-4">
                     <a asp-controller="ChequeBook"
                        asp-action="Status"
@@ -244,11 +246,11 @@
                     </a>
                 </div>
 
-                <div class="col-md-4">
-                    <a asp-controller="Customer" asp-action="Profile" class="quick-btn">
-                        <i class="bi bi-person-circle me-2"></i> Profile
+                @* <div class="col-md-12">
+                    <a asp-controller="Profile" asp-action="Index" class="quick-btn">
+                       <i class="bi bi-person-circle me-2"></i> My Profile
                     </a>
-                </div>
+                </div> *@
 
                 <div class="col-md-4">
                     <a asp-controller="Beneficiary" asp-action="Index" class="quick-btn">
@@ -257,8 +259,8 @@
                 </div>
 
                 <div class="col-md-12">
-                    <a asp-controller="Account" asp-action="Logout" class="quick-btn logout-btn">
-                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                    <a asp-controller="Profile" asp-action="Index" class="quick-btn">
+                        <i class="bi bi-box-arrow-right me-2"></i> My Profile
                     </a>
                 </div>
 

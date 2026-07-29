@@ -1,0 +1,238 @@
+﻿@model OnlineBankingApplication.ViewModels.ProfileVM
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<!-- ==========================================================
+PROFILE FEATURE
+Customer Edit Profile Page
+========================================================== -->
+
+<style>
+
+    .profile-card {
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .section-title {
+        color: #0B4F8C;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    /* ==========================================================
+           PROFILE FEATURE
+           Read-only fields
+        ========================================================== */
+
+    .readonly-box {
+        background: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        padding: 9px 12px;
+        cursor: default;
+        user-select: text;
+    }
+
+</style>
+
+<div class="container mt-4">
+
+    <div class="card profile-card">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Edit Profile</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" method="post">
+
+                <!-- ==========================================================
+                PROFILE FEATURE
+                CustomerId required in POST
+                ========================================================== -->
+
+                <input asp-for="CustomerId" type="hidden" />
+
+                <div class="row">
+
+                    <!-- LEFT SIDE -->
+
+                    <div class="col-md-6">
+
+                        <h5 class="section-title">
+
+                            Personal Details
+
+                        </h5>
+
+                        <label>First Name</label>
+
+                        <div class="readonly-box">
+
+                            @Model.FirstName
+
+                        </div>
+
+                        <br />
+
+                        <label>Last Name</label>
+
+                        <div class="readonly-box">
+
+                            @Model.LastName
+
+                        </div>
+
+                        <br />
+
+                        <label>Email</label>
+
+                        <div class="readonly-box">
+
+                            @Model.Email
+
+                        </div>
+
+                        <br />
+
+                        <label>Date of Birth</label>
+
+                        <div class="readonly-box">
+
+                            @(Model.Dob?.ToString("dd MMM yyyy"))
+
+                        </div>
+
+                        <br />
+
+                        <label>Gender</label>
+
+                        <div class="readonly-box">
+
+                            @Model.Gender
+
+                        </div>
+
+                        <br />
+
+                        <label>PAN</label>
+
+                        <div class="readonly-box">
+
+                            @Model.Pannumber
+
+                        </div>
+
+                        <br />
+
+                        <label>Aadhaar</label>
+
+                        <div class="readonly-box">
+
+                            @Model.AadhaarNumber
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+
+                    <div class="col-md-6">
+
+                        <h5 class="section-title">
+
+                            Banking Details
+
+                        </h5>
+
+                        <label>Account Type</label>
+
+                        <div class="readonly-box">
+
+                            @Model.AccountType
+
+                        </div>
+
+                        <br />
+
+                        <label>Branch</label>
+
+                        <div class="readonly-box">
+
+                            @Model.Branch
+
+                        </div>
+
+                        <br />
+
+                        <!-- ==========================================================
+                        PROFILE FEATURE
+                        Editable Phone
+                        ========================================================== -->
+
+                        <label asp-for="Phone"></label>
+
+                        <input asp-for="Phone"
+                               class="form-control" />
+
+                        <span asp-validation-for="Phone"
+                              class="text-danger"></span>
+
+                        <br />
+
+                        <!-- ==========================================================
+                        PROFILE FEATURE
+                        Editable Address
+                        ========================================================== -->
+
+                        <label asp-for="Address"></label>
+
+                        <textarea asp-for="Address"
+                                  class="form-control"
+                                  rows="3"></textarea>
+
+                        <span asp-validation-for="Address"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="text-end">
+
+                    <button class="btn btn-primary">
+
+                        Submit For Approval
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

@@ -30,13 +30,15 @@ public partial class OnlineBankingDbContext : DbContext
 
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<ProfileUpdateRequest> ProfileUpdateRequests { get; set; }
     public virtual DbSet<Transaction> Transactions { get; set; }
 
     public virtual DbSet<UtilityBill> UtilityBills { get; set; }
 
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=OnlineBankingDB;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-9JDC2HB\\SQLEXPRESS;Database=OnlineBankingDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -208,6 +210,39 @@ public partial class OnlineBankingDbContext : DbContext
                 .HasMaxLength(20)
                 .HasDefaultValue("Pending");
             entity.Property(e => e.UserId).HasMaxLength(450);
+        });
+
+        modelBuilder.Entity<ProfileUpdateRequest>(entity =>
+        {
+            entity.HasKey(e => e.RequestId);
+
+            entity.ToTable("ProfileUpdateRequest");
+
+            entity.Property(e => e.NewPhone)
+                .HasMaxLength(15);
+
+            entity.Property(e => e.NewAddress)
+                .HasMaxLength(200);
+
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasDefaultValue("Pending");
+
+            entity.Property(e => e.RequestDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getdate())");
+
+            entity.Property(e => e.ApprovedDate)
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.ApprovedBy)
+                .HasMaxLength(450);
+
+            entity.HasOne(d => d.Customer)
+                .WithMany(p => p.ProfileUpdateRequests)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProfileUpdateRequest_Customer");
         });
 
         modelBuilder.Entity<Transaction>(entity =>
