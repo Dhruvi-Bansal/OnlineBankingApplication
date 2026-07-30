@@ -132,10 +132,14 @@
 
                             <span class="nav-link text-white">
 
-                                <i class="bi bi-person-circle"></i>
+                                
+                                <a asp-controller="Profile" asp-action="Index" style="color:white">
+                                    <i class="bi bi-person-circle"></i>
+                                    Hello,
+                                    <strong>@User.Identity.Name</strong>
+                                </a>
 
-                                Hello,
-                                <strong>@User.Identity.Name</strong>
+                                
 
                             </span>
 

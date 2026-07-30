@@ -3,9 +3,6 @@
 @{
     ViewData["Title"] = "Customer Dashboard";
 }
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 <style>
     body {
         background: #F4F8FC;
@@ -16,8 +13,8 @@
     .welcome-card {
         background: linear-gradient(135deg, #0B4F8C, #1D7CD8);
         color: white;
-        border-radius: 20px;
-        padding: 35px;
+        border-radius: 15px;
+        padding: 30px;
         margin-bottom: 30px;
         box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
     }
@@ -34,7 +31,7 @@
     .dashboard-card {
         background: white;
         border: none;
-        border-radius: 18px;
+        border-radius: 15px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
         transition: .3s;
         overflow: hidden; 
@@ -46,33 +43,32 @@
         }
 
     .icon {
-        font-size: 42px;
+        font-size: 38px;
         color: #0B4F8C;
-    }
-
-    .balance {
-        color: #0B4F8C;
-        font-size: 34px;
-        font-weight: bold;
     }
 
     /* Quick Buttons */
     .quick-btn {
-        display: block;
-        width: 100%;
-        padding: 16px;
-        border-radius: 12px;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
         text-decoration: none;
-        background: #0B4F8C;
-        color: white;
-        font-weight: 600;
-        transition: .3s;
     }
 
+        .quick-btn i {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .quick-btn p {
+            margin: 0;
+            font-size: 14px;
+        }
+
         .quick-btn:hover {
-            background: #1565C0;
-            color: white;
+            background: #c7dff2;
             transform: translateY(-3px);
         }
 
@@ -89,7 +85,7 @@
         background: #0B4F8C;
         color: white;
         font-weight: 600;
-        font-size: 22px;
+        font-size: 16px;
         padding: 16px 24px; 
         border-bottom: none;
         border-radius: 0;
@@ -149,7 +145,7 @@
 
                 <h6 class="mt-3 text-muted">Account Type</h6>
 
-                <h4>@Model.AccountType</h4>
+                <h5>@Model.AccountType</h5>
 
             </div>
 
@@ -177,11 +173,9 @@
 
                 <h6 class="mt-3 text-muted">Available Balance</h6>
 
-                <div class="balance">
+                
 
-                    ₹ @Model.Balance.ToString("N2")
-
-                </div>
+                <h5>₹ @Model.Balance.ToString("N2")</h5>
 
             </div>
 
@@ -205,13 +199,15 @@
 
                 <div class="col-md-4">
                     <a asp-controller="Transaction" asp-action="Transfer" class="quick-btn">
-                        <i class="bi bi-arrow-left-right me-2"></i> Transfer Money
+                        <i class="bi bi-arrow-left-right me-2"></i> 
+                        <p>Transfer Money</p>
                     </a>
                 </div>
 
                 <div class="col-md-4">
                     <a asp-controller="Bill" asp-action="PayBills" class="quick-btn">
-                        <i class="bi bi-receipt me-2"></i> Pay Bills
+                        <i class="bi bi-receipt me-2"></i> 
+                        <p>Pay Bills</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -221,7 +217,7 @@
 
                         <i class="bi bi-clock-history me-2"></i>
 
-                        Bill Payment History
+                        <p>Bill Payment History</p>
 
                     </a>
                 </div>
@@ -232,27 +228,28 @@
 
                     <i class="bi bi-journal-bookmark me-2"></i>
 
-                    Request Cheque Book
+                        <p>Request Cheque Book</p>
 
                 </a>
                 </div>
 
-                <div class="col-md-4">
+                @* <div class="col-md-4">
                     <a asp-controller="ChequeBook"
                        asp-action="Status"
                        class="quick-btn">
 
                         <i class="bi bi-journal-bookmark-fill me-2"></i>
 
-                        Cheque Book Status
+                        <p>Cheque Book Status</p>
 
                     </a>
-                </div>
+                </div> *@
 
 
                 <div class="col-md-4">
                     <a asp-controller="Transaction" asp-action="History" class="quick-btn">
-                        <i class="bi bi-file-earmark-text me-2"></i> Statement
+                        <i class="bi bi-file-earmark-text me-2"></i> 
+                        <p>Statement</p>
                     </a>
                 </div>
 
@@ -264,15 +261,16 @@
 
                 <div class="col-md-4">
                     <a asp-controller="Beneficiary" asp-action="Index" class="quick-btn">
-                        <i class="bi bi-people me-2"></i> Beneficiaries
+                        <i class="bi bi-people me-2"></i> 
+                        <p>Beneficiaries</p>
                     </a>
                 </div>
 
-                <div class="col-md-12">
+                @* <div class="col-md-12">
                     <a asp-controller="Profile" asp-action="Index" class="quick-btn">
                         <i class="bi bi-box-arrow-right me-2"></i> My Profile
                     </a>
-                </div>
+                </div> *@
 
             </div>
 
@@ -418,4 +416,5 @@
 
         </div>
 
+    </div>
     </div>
