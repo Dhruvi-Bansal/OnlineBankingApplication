@@ -1,31 +1,310 @@
+/*=====================================
+    GLOBAL THEME
+=====================================*/
+
+:root {
+    --primary: #0B4F8C;
+    --primary-dark: #082F5C;
+    --secondary: #1565C0;
+    --light: #FFFFFF;
+    --white: #FFFFFF;
+    --text: #EAF3FF;
+    --border: #574B60;
+    --danger: #2E4052;
+    --success: #38686A;
+    --warning: #311012;
+    --shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    font-size: 15px;
+    scroll-behavior: smooth;
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--light);
+    color: var(--text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+
+/*=====================================
+    NAVBAR
+=====================================*/
+
+.navbar {
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark)) !important;
+    box-shadow: var(--shadow);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.navbar-brand {
+    color: white !important;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+    .navbar-brand i {
+        color: var(--secondary);
+        margin-right: 8px;
+    }
+
+.nav-link {
+    color: rgba(255,255,255,.9) !important;
+    transition: .25s;
+}
+
+    .nav-link:hover {
+        color: var(--secondary) !important;
+    }
+
+.navbar .btn-light {
+    background: var(--secondary);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+    .navbar .btn-light:hover {
+        background: #16A085;
+        color: white;
+    }
+
+
+/*=====================================
+    CARDS
+=====================================*/
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    background: linear-gradient(90deg,var(--primary),var(--primary-dark));
+    color: white;
+    border-radius: 15px 15px 0 0 !important;
+    font-weight: 600;
+}
+
+.card-body {
+    background: white;
+}
+
+
+/*=====================================
+    BUTTONS
+=====================================*/
+
+.btn-primary {
+    background: var(--primary);
+    border: none;
+}
+
+    .btn-primary:hover {
+        background: var(--primary-dark);
+    }
+
+.btn-success {
+    background: var(--secondary);
+    border: none;
+}
+
+    .btn-success:hover {
+        background: #169D82;
+    }
+
+.btn-danger {
+    border: none;
+}
+
+.btn-warning {
+    color: white;
+}
+
+
+/*=====================================
+    TABLES
+=====================================*/
+
+.table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background: var(--primary);
+        color: white;
+    }
+
+.table-hover tbody tr:hover {
+    background: #ECF7FF;
+}
+
+
+/*=====================================
+    FORMS
+=====================================*/
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: none;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 8px rgba(26,188,156,.25);
+    }
+
+
+/*=====================================
+    ALERTS
+=====================================*/
+
+.alert-success {
+    border-left: 6px solid var(--success);
+}
+
+.alert-danger {
+    border-left: 6px solid var(--danger);
+}
+
+.alert-warning {
+    border-left: 6px solid var(--warning);
+}
+
+
+/*=====================================
+    LINKS
+=====================================*/
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+    a:hover {
+        color: var(--secondary);
+    }
+
+
+/*=====================================
+    DASHBOARD BOXES
+=====================================*/
+
+.dashboard-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    transition: .3s;
+    box-shadow: var(--shadow);
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .dashboard-card i {
+        font-size: 45px;
+        color: var(--secondary);
+    }
+
+    .dashboard-card h4 {
+        margin-top: 15px;
+    }
+
+
+/*=====================================
+    FOOTER
+=====================================*/
+
+footer {
+    background: var(--primary);
+    color: white;
+    margin-top: 60px;
+    padding: 15px 0;
+}
+
+    footer a {
+        color: var(--secondary);
+    }
+
+        footer a:hover {
+            color: white;
+        }
+
+
+/*=====================================
+    BADGES
+=====================================*/
+
+.badge.bg-success {
+    background: var(--secondary) !important;
+}
+
+.badge.bg-danger {
+    background: var(--danger) !important;
+}
+
+.badge.bg-warning {
+    background: var(--warning) !important;
+}
+
+
+/*=====================================
+    LIST GROUP
+=====================================*/
+
+.list-group-item {
+    border: 1px solid var(--border);
+}
+
+    .list-group-item.active {
+        background: var(--primary);
+        border-color: var(--primary);
+    }
+
+
+/*=====================================
+    INPUT GROUPS
+=====================================*/
+
+.input-group-text {
+    background: var(--primary);
+    color: white;
+    border: none;
+}
+
+
+/*=====================================
+    PAGE TITLES
+=====================================*/
+
+.page-title {
+    color: var(--primary);
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+
+/*=====================================
+    RESPONSIVE
+=====================================*/
+
+@media(max-width:768px) {
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
 }

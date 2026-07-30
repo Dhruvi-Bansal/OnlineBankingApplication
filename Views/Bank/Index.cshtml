@@ -1,10 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Online Banking";
 }
-
+<style>
+    .buttons-login{
+        width:70px;
+        height:50px;
+        
+    }
+</style>
 <div class="container-fluid p-0 bg-light">
 
-    <!-- Hero Section -->
     <div class="py-5 text-center text-white"
          style="background:linear-gradient(135deg,#1E3A8A,#0F766E);">
 
@@ -22,21 +27,19 @@
             {
                 <a asp-controller="Account"
                    asp-action="Login"
-                   class="btn btn-light btn-lg">
+                   class="btn btn-light btn-lg"
+                   style="width:170px">
 
                     Customer Login
 
                 </a>
 
-                <a asp-controller="Account"
-                   asp-action="AdminLogin"
-                   class="btn btn-dark btn-lg">
-                    Admin Login
-                </a>
+                
 
                 <a asp-controller="Account"
                    asp-action="Register"
-                   class="btn btn-warning btn-lg">
+                   class="btn btn-light btn-lg"
+                    style="width:170px">
 
                     Register
 
@@ -90,7 +93,7 @@
 
     <div class="container py-5">
 
-        <h2 class="text-center fw-bold mb-5">
+        <h2 class="text-center fw-bold mb-5" style="color:#1E3A8A">
 
             Our Services
 
@@ -106,9 +109,9 @@
 
                         <h1>🏦</h1>
 
-                        <h5>Open Bank Account</h5>
+                        <h5 style="color:#1E3A8A">Open Bank Account</h5>
 
-                        <p>
+                        <p style="color:#1E3A8A">
                             Open your savings or current account completely online.
                         </p>
 
@@ -126,9 +129,9 @@
 
                         <h1>💸</h1>
 
-                        <h5>Fund Transfer</h5>
+                        <h5 style="color:#1E3A8A">Fund Transfer</h5>
 
-                        <p>
+                        <p style="color:#1E3A8A">
                             Transfer money securely between bank accounts.
                         </p>
 
@@ -146,9 +149,9 @@
 
                         <h1>💳</h1>
 
-                        <h5>Bill Payments</h5>
+                        <h5 style="color:#1E3A8A">Bill Payments</h5>
 
-                        <p>
+                        <p style="color:#1E3A8A">
                             Pay electricity, gas, water and mobile bills.
                         </p>
 
@@ -166,9 +169,9 @@
 
                         <h1>📒</h1>
 
-                        <h5>Cheque Book</h5>
+                        <h5 style="color:#1E3A8A">Cheque Book</h5>
 
-                        <p>
+                        <p style="color:#1E3A8A">
                             Request a new cheque book online anytime.
                         </p>
 
@@ -185,42 +188,58 @@
     <!-- Features -->
 
     <div class="container py-5">
+        <h2 class="text-center fw-bold mb-5" style="color:#1E3A8A">
 
-        <div class="row text-center">
+            Our Features
+
+        </h2>
+        <div class="row g-3">
 
             <div class="col-md-4">
 
-                <h3>🔒</h3>
+                <div class="card shadow h-100">
 
-                <h5>Secure Banking</h5>
+                    <div class="card-body text-center">
 
-                <p>
-                    Password hashing, Identity authentication and role-based authorization.
-                </p>
+                        <h5 style="color:#1E3A8A">Secure Banking</h5>
+
+                        <p style="color:#1E3A8A">
+                            Password hashing, Identity authentication and role-based authorization.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card shadow h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5 style="color:#1E3A8A">Fast Transactions</h5>
+
+                        <p style ="color:#1E3A8A">
+                            Real-time balance updates and secure fund transfers.
+                        </p>
+                    </div>
+                </div>
 
             </div>
 
             <div class="col-md-4">
 
-                <h3>⚡</h3>
+                <div class="card shadow h-100">
 
-                <h5>Fast Transactions</h5>
+                    <div class="card-body text-center">
 
-                <p>
-                    Real-time balance updates and secure fund transfers.
-                </p>
+                        <h5 style="color:#1E3A8A">24×7 Banking</h5>
 
-            </div>
-
-            <div class="col-md-4">
-
-                <h3>📈</h3>
-
-                <h5>24×7 Banking</h5>
-
-                <p>
-                    Access your account from anywhere at any time.
-                </p>
+                        <p style="color:#1E3A8A">
+                            Access your account from anywhere at any time.
+                        </p>
+                    </div>
+                </div>
 
             </div>
 
