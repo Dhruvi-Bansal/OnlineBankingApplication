@@ -4,6 +4,8 @@ using OnlineBankingApplication.DAL;
 using OnlineBankingApplication.Models;
 using OnlineBankingApplication.Repositories;
 using OnlineBankingApplication.Repositories.Interfaces;
+using OnlineBankingApplication.AI;
+using OnlineBankingApplication.Services;
 
 namespace OnlineBankingApplication
 {
@@ -48,6 +50,8 @@ namespace OnlineBankingApplication
             });
 
             builder.Services.AddControllersWithViews();
+            builder.Services.Configure<AISettings>(builder.Configuration.GetSection("GroqAI"));
+            builder.Services.AddHttpClient<IAIService, AIService>();
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
             builder.Services.AddScoped<IBankAccountRepo, BankAccountRepo>();
             builder.Services.AddScoped<IBeneficiaryRepo, BeneficiaryRepo>();    
@@ -55,6 +59,7 @@ namespace OnlineBankingApplication
             builder.Services.AddScoped<IProfileRepo, ProfileRepo>();
             builder.Services.AddScoped<IBillPaymentRepo, BillPaymentRepo>();
             builder.Services.AddScoped<IProfileUpdateRepo, ProfileUpdateRepo>();
+            
 
             var app = builder.Build();
 

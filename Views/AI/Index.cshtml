@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "AI Banking Assistant";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>🤖 AI Banking Assistant</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div id="chatBox"
+                 style="height:400px;
+                overflow-y:auto;
+                border:1px solid lightgray;
+                padding:15px;
+                background:#f8f9fa;">
+
+                <div class="text-primary">
+
+                    <b>AI :</b>
+
+                    Hello 👋
+
+                    How can I help you today?
+
+                </div>
+
+            </div>
+
+            <br />
+
+            <div class="input-group">
+
+                <input type="text"
+                       id="txtQuestion"
+                       class="form-control"
+                       placeholder="Ask anything about banking..." />
+
+                <button id="btnAsk"
+                        class="btn btn-primary">
+
+                    Ask
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        $("#txtQuestion").keypress(function(e) {
+
+            if (e.which == 13) {
+
+                $("#btnAsk").click();
+
+            }
+
+        });
+
+        $("#btnAsk").click(function() {
+
+            let question = $("#txtQuestion").val().trim();
+
+            if (question == "")
+                return;
+
+            $("#chatBox").append(
+
+                "<br><div style='text-align:right;'>" +
+                "<span class='badge bg-primary'>You</span><br>" +
+                question +
+                "</div><br>");
+
+            $("#chatBox").append(
+
+                "<div id='typing' class='text-secondary'>AI is typing...</div>");
+
+            $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
+
+            $.post("/AI/Ask",
+                {
+                    question: question
+                },
+
+                function(data) {
+
+                    $("#typing").remove();
+
+                    $("#chatBox").append(
+
+                        "<div>" +
+                        "<span class='badge bg-success'>AI</span><br>" +
+                        data.response +
+                        "</div><br>");
+
+                    $("#txtQuestion").val("");
+
+                    $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
+
+                })
+
+                .fail(function() {
+
+                    $("#typing").remove();
+
+                    $("#chatBox").append(
+
+                        "<div class='text-danger'>Unable to connect to AI.</div>");
+
+                });
+
+        });
+
+    </script>
+
+
+
+}
