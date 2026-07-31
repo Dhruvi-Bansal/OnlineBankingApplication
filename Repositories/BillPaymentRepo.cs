@@ -61,15 +61,17 @@ namespace OnlineBankingApplication.Repositories
                 //----------------------------------------------------
 
                 var account = await _context.BankAccounts
-                    .FirstOrDefaultAsync(a =>
-                        a.AccountNumber == model.AccountNumber &&
-                        a.CustomerId == customer.CustomerId);
+                .FirstOrDefaultAsync(a => a.AccountNumber == model.AccountNumber);
 
                 if (account == null)
-                    return (false, "Invalid account number.", null);
+                {
+                    return (false, "Account number does not exist.", null);
+                }
 
-                if (account.Status != "Active")
-                    return (false, "Account is not active.", null);
+                if (account.CustomerId != customer.CustomerId)
+                {
+                    return (false, "This account does not belong to the logged-in customer.", null);
+                }
 
                 //----------------------------------------------------
                 // Balance Check

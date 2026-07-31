@@ -1,116 +1,55 @@
-﻿@model IEnumerable<OnlineBankingApplication.Models.Customer>
+﻿@model OnlineBankingApplication.ViewModels.ApproveCustomerVM
 
 @{
-    ViewData["Title"] = "Customer Approval";
+    ViewData["Title"] = "Approve Customer";
 }
 
-<h2 class="mb-4 text-primary">
-    Pending Customer Requests
-</h2>
+<h2 class="mb-4 text-primary">Approve Customer</h2>
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Success"]
-    </div>
-}
-
-<div class="card shadow" style="height:65vh">
-
-    <div class="card-header bg-primary text-white">
-
-        Customer Registration Requests
-
+<div class="card shadow">
+    <div class="card-header bg-success text-white">
+        Approve Customer Account
     </div>
 
     <div class="card-body">
 
-        <table class="table table-hover table-bordered align-middle">
+        <form asp-action="Approve" method="post">
 
-            <thead class="table-light">
+            <input asp-for="CustomerId" type="hidden" />
 
-                <tr>
+            <div class="mb-3">
+                <label class="form-label">Customer Name</label>
+                <input asp-for="CustomerName" class="form-control" readonly />
+            </div>
 
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Account</th>
-                    <th>Branch</th>
-                    <th>Status</th>
-                    <th width="180">Action</th>
+            <div class="mb-3">
+                <label asp-for="InitialDeposit" class="form-label">
+                    Initial Deposit
+                </label>
 
-                </tr>
+                <input asp-for="InitialDeposit"
+                       class="form-control"
+                       placeholder="Enter initial deposit" />
 
-            </thead>
+                <span asp-validation-for="InitialDeposit"
+                      class="text-danger"></span>
+            </div>
 
-            <tbody>
+            <button type="submit" class="btn btn-success">
+                Approve & Create Account
+            </button>
 
-                @if (Model.Any())
-                {
-                    @foreach (var item in Model)
-                    {
-                        <tr>
+            <a asp-action="Dashboard" class="btn btn-secondary">
+                Cancel
+            </a>
 
-                            <td>@item.FirstName @item.LastName</td>
-
-                            <td>@item.Email</td>
-
-                            <td>@item.Phone</td>
-
-                            <td>@item.AccountType</td>
-
-                            <td>@item.Branch</td>
-
-                            <td>
-
-                                <span class="badge bg-warning text-dark">
-
-                                    @item.Status
-
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <a asp-action="Approve"
-                                   asp-route-id="@item.CustomerId"
-                                   class="btn btn-success btn-sm">
-
-                                    ✔ Approve
-
-                                </a>
-
-                                <a asp-action="Reject"
-                                   asp-route-id="@item.CustomerId"
-                                   class="btn btn-danger btn-sm">
-
-                                    ✖ Reject
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-
-                        <td colspan="7" class="text-center">
-
-                            No Pending Customers
-
-                        </td>
-
-                    </tr>
-                }
-
-            </tbody>
-
-        </table>
+        </form>
 
     </div>
-
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
