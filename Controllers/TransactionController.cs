@@ -83,15 +83,12 @@ namespace OnlineBankingApplication.Controllers
         // Transaction History
         //---------------------------------------------------------
 
-        public async Task<IActionResult> History()
-        {
-            var userId =
-                User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var transactions =
-                await _transactionRepo.GetTransactions(userId!);
-
-            return View(transactions);
+        public async Task<IActionResult> History() 
+        { 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+            var transactions = await _transactionRepo.GetTransactions(userId!); 
+            ViewBag.CurrentAccountId = await _transactionRepo.GetCurrentAccountId(userId!); 
+            return View(transactions); 
         }
 
         //---------------------------------------------------------

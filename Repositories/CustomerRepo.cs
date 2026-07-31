@@ -95,21 +95,23 @@ namespace OnlineBankingApplication.Repositories
 
             return new CustomerDashboardVM
             {
+                AccountId = account == null ? 0 : account.AccountId,
+
                 CustomerName = customer.FirstName + " " + customer.LastName,
 
                 Status = customer.Status,
 
-                AccountNumber = account == null ?
-                                "Pending Approval" :
-                                account.AccountNumber,
+                AccountNumber = account == null
+                ? "Pending Approval"
+                : account.AccountNumber,
 
-                AccountType = account == null ?
-                              "Savings Account" :
-                              account.AccountType,
+                        AccountType = account == null
+                ? "Savings Account"
+                : account.AccountType,
 
-                Balance = account == null ?
-                          0 :
-                          account.Balance,
+                        Balance = account == null
+                ? 0
+                : account.Balance,
 
                 RecentTransactions = transactions
             };

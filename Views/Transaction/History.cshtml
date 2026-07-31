@@ -60,16 +60,27 @@
 
                             </td>
 
-                            <td>
+                            <td> 
+                                @if (item.SenderAccountId == (int?)ViewBag.CurrentAccountId) {
+                                    <span class="badge bg-danger">Debit</span>
+                                } 
+                                else
+                                {
 
-                                @item.TransactionType
-
+                                    <span class="badge bg-success">Credit</span>
+                                }
                             </td>
 
-                            <td>
+                            <td> 
+                                @if (item.SenderAccountId == (int?)ViewBag.CurrentAccountId) 
+                                {
+                                    <span class="text-danger fw-bold"> -₹ @item.Amount.ToString("N2") </span>
+                                } 
+                                else
+                                {
 
-                                ₹ @item.Amount
-
+                                    <span class="text-success fw-bold"> +₹ @item.Amount.ToString("N2") </span>
+                                }
                             </td>
 
                             <td>

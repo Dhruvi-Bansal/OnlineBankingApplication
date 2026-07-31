@@ -17,5 +17,6 @@ namespace OnlineBankingApplication.Repositories
         Task<Transaction?> GetTransaction(long id);
 
         string GenerateReferenceNo();
+        Task<int?> GetCurrentAccountId(string userId);
     }
 }

@@ -230,6 +230,19 @@ namespace OnlineBankingApplication.Repositories
                 .FirstOrDefaultAsync(x =>
                     x.TransactionId == id);
         }
+        public async Task<int?> GetCurrentAccountId(string userId)
+        {
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (customer == null)
+                return null;
+
+            var account = await _context.BankAccounts
+                .FirstOrDefaultAsync(x => x.CustomerId == customer.CustomerId);
+
+            return account?.AccountId;
+        }
 
     }
 }
