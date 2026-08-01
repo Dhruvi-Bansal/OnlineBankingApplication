@@ -5,10 +5,6 @@ using OnlineBankingApplication.Repositories;
 
 namespace OnlineBankingApplication.Controllers
 {
-    // ==========================================================
-    // PROFILE FEATURE
-    // Customer Profile Controller
-    // ==========================================================
 
     [Authorize(Roles = "Customer")]
     public class ProfileController : Controller
@@ -19,10 +15,6 @@ namespace OnlineBankingApplication.Controllers
         {
             _repo = repo;
         }
-
-        // ==========================================================
-        // PROFILE PAGE
-        // ==========================================================
 
         public async Task<IActionResult> Index()
         {
@@ -35,11 +27,6 @@ namespace OnlineBankingApplication.Controllers
 
             return View(profile);
         }
-
-        // ==========================================================
-        // EDIT PROFILE
-        // ==========================================================
-
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
@@ -53,23 +40,12 @@ namespace OnlineBankingApplication.Controllers
             return View(profile);
         }
 
-        // ==========================================================
-        // SAVE PROFILE REQUEST
-        // ==========================================================
-
         [HttpPost]
         public async Task<IActionResult> Edit(ViewModels.ProfileVM model)
         {
-            // ------------------------------------------------------
-            // Validation
-            // ------------------------------------------------------
 
             if (!ModelState.IsValid)
                 return View(model);
-
-            // ------------------------------------------------------
-            // Get logged in customer
-            // ------------------------------------------------------
 
             string email = User.Identity!.Name!;
 
@@ -78,9 +54,6 @@ namespace OnlineBankingApplication.Controllers
             if (profile == null)
                 return RedirectToAction("Login", "Account");
 
-            // ------------------------------------------------------
-            // Check if already pending
-            // ------------------------------------------------------
 
             bool pending = await _repo.HasPendingRequestAsync(profile.CustomerId);
 
@@ -91,10 +64,6 @@ namespace OnlineBankingApplication.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
-            // ------------------------------------------------------
-            // Create Request
-            // ------------------------------------------------------
 
             ProfileUpdateRequest request = new ProfileUpdateRequest
             {

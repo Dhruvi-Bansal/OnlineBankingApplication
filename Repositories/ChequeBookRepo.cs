@@ -24,8 +24,7 @@ namespace OnlineBankingApplication.Repositories
 
         public async Task<ChequeBookRequest> GetRequestByIdAsync(int id)
         {
-            return await _context.ChequeBookRequests
-                .FirstOrDefaultAsync(x => x.RequestId == id);
+            return await _context.ChequeBookRequests.FirstOrDefaultAsync(x => x.RequestId == id);
         }
 
         public async Task SaveAsync()

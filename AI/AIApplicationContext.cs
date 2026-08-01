@@ -54,7 +54,7 @@ Rules:
 • OTP verification is NOT implemented.
 
 6. Money Transfer
-• Money can be transferred only to saved beneficiaries.
+• Money can be transferred only to valid account numbers.
 
 7. Profile
 • Customer can view profile.

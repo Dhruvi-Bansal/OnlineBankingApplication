@@ -21,22 +21,11 @@ namespace OnlineBankingApplication.Controllers
             _userManager = userManager;
         }
 
-        //---------------------------------------------------------
-        // GET : Transfer
-        //---------------------------------------------------------
-
         [HttpGet]
         public IActionResult Transfer()
         {
             return View(new TransferMoneyVM());
         }
-
-
-
-        //---------------------------------------------------------
-        // POST : Transfer
-        //---------------------------------------------------------
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         
@@ -78,11 +67,6 @@ namespace OnlineBankingApplication.Controllers
 
             return View(vm);
         }
-
-        //---------------------------------------------------------
-        // Transaction History
-        //---------------------------------------------------------
-
         public async Task<IActionResult> History() 
         { 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
@@ -90,10 +74,6 @@ namespace OnlineBankingApplication.Controllers
             ViewBag.CurrentAccountId = await _transactionRepo.GetCurrentAccountId(userId!); 
             return View(transactions); 
         }
-
-        //---------------------------------------------------------
-        // Receipt
-        //---------------------------------------------------------
 
         public async Task<IActionResult> Receipt(long id)
         {

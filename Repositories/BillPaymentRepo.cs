@@ -27,18 +27,14 @@ namespace OnlineBankingApplication.Repositories
 
             try
             {
-                //----------------------------------------------------
                 // Verify logged-in user
-                //----------------------------------------------------
 
                 var user = await _userManager.FindByIdAsync(userId);
 
                 if (user == null)
                     return (false, "User not found.", null);
 
-                //----------------------------------------------------
                 // Verify password
-                //----------------------------------------------------
 
                 bool passwordValid =
                     await _userManager.CheckPasswordAsync(user, model.Password);
@@ -46,20 +42,14 @@ namespace OnlineBankingApplication.Repositories
                 if (!passwordValid)
                     return (false, "Incorrect password.", null);
 
-                //----------------------------------------------------
                 // Customer
-                //----------------------------------------------------
-
                 var customer = await _context.Customers
                     .FirstOrDefaultAsync(c => c.UserId == userId);
 
                 if (customer == null)
                     return (false, "Customer not found.", null);
 
-                //----------------------------------------------------
                 // Account Validation
-                //----------------------------------------------------
-
                 var account = await _context.BankAccounts
                 .FirstOrDefaultAsync(a => a.AccountNumber == model.AccountNumber);
 
@@ -73,15 +63,11 @@ namespace OnlineBankingApplication.Repositories
                     return (false, "This account does not belong to the logged-in customer.", null);
                 }
 
-                //----------------------------------------------------
                 // Balance Check
-                //----------------------------------------------------
-
+                
                 if (account.Balance < model.Amount)
                     return (false, "Insufficient balance.", null);
-                //----------------------------------------------------
                 // Duplicate Bill Payment Check
-                //----------------------------------------------------
 
                 var duplicatePayment = await _context.BillPayments
                 .Include(x => x.Bill)
@@ -99,9 +85,7 @@ namespace OnlineBankingApplication.Repositories
                         null);
                 }
 
-                //----------------------------------------------------
                 // Create Utility Bill
-                //----------------------------------------------------
 
                 var utilityBill = new UtilityBill
                 {
@@ -116,15 +100,11 @@ namespace OnlineBankingApplication.Repositories
 
                 await _context.SaveChangesAsync();
 
-                //----------------------------------------------------
                 // Deduct Balance
-                //----------------------------------------------------
 
                 account.Balance -= model.Amount;
 
-                //----------------------------------------------------
                 // Create Transaction
-                //----------------------------------------------------
 
                 var transaction = new Transaction
                 {
@@ -153,9 +133,7 @@ namespace OnlineBankingApplication.Repositories
 
                 await _context.SaveChangesAsync();
 
-                //----------------------------------------------------
-                // Bill Payment
-                //----------------------------------------------------
+                // Add a record to Bill Payment table
 
                 var payment = new BillPayment
                 {
@@ -174,9 +152,7 @@ namespace OnlineBankingApplication.Repositories
 
                 _context.BillPayments.Add(payment);
 
-                //----------------------------------------------------
                 // Update Balance
-                //----------------------------------------------------
 
                 _context.BankAccounts.Update(account);
 
@@ -198,10 +174,7 @@ namespace OnlineBankingApplication.Repositories
             }
         }
 
-        //--------------------------------------------------------
         // History
-        //--------------------------------------------------------
-
         public async Task<List<BillPayment>>
             GetPaymentHistoryAsync(string userId)
         {
@@ -226,9 +199,7 @@ namespace OnlineBankingApplication.Repositories
                 .ToListAsync();
         }
 
-        //--------------------------------------------------------
         // Receipt
-        //--------------------------------------------------------
 
         public async Task<BillPayment?>
             GetReceiptAsync(long transactionId)

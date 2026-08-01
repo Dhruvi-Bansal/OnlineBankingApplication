@@ -4,11 +4,7 @@ using OnlineBankingApplication.Models;
 using OnlineBankingApplication.ViewModels;
 
 namespace OnlineBankingApplication.Repositories
-{
-    // ==========================================================
-    // PROFILE FEATURE
-    // Repository for Customer Profile
-    // ==========================================================
+{    
     public class ProfileRepo : IProfileRepo
     {
         private readonly OnlineBankingDbContext _context;
@@ -18,11 +14,6 @@ namespace OnlineBankingApplication.Repositories
             _context = context;
         }
 
-        // ==========================================================
-        // CUSTOMER SIDE
-        // ==========================================================
-
-        // NEW
         // Load customer profile along with any pending request
         public async Task<ProfileVM?> GetProfileAsync(string email)
         {
@@ -32,9 +23,7 @@ namespace OnlineBankingApplication.Repositories
             if (customer == null)
                 return null;
 
-            // ------------------------------------------------------
-            // Get latest pending request (if any)
-            // ------------------------------------------------------
+            // Get latest pending request
 
             var request = await _context.ProfileUpdateRequests
                 .Where(x => x.CustomerId == customer.CustomerId &&
@@ -68,10 +57,6 @@ namespace OnlineBankingApplication.Repositories
 
                 Branch = customer.Branch,
 
-                // ---------------------------------------------
-                // PROFILE FEATURE
-                // ---------------------------------------------
-
                 HasPendingRequest = request != null,
 
                 PendingPhone = request?.NewPhone,
@@ -83,10 +68,6 @@ namespace OnlineBankingApplication.Repositories
                 RequestDate = request?.RequestDate
             };
         }
-
-        // ==========================================================
-
-        // NEW
         // Check whether customer already has pending request
 
         public async Task<bool> HasPendingRequestAsync(int customerId)
@@ -95,10 +76,6 @@ namespace OnlineBankingApplication.Repositories
                 x.CustomerId == customerId &&
                 x.Status == "Pending");
         }
-
-        // ==========================================================
-
-        // NEW
         // Get pending request
 
         public async Task<ProfileUpdateRequest?> GetPendingRequestAsync(int customerId)
@@ -109,10 +86,6 @@ namespace OnlineBankingApplication.Repositories
                 .OrderByDescending(x => x.RequestDate)
                 .FirstOrDefaultAsync();
         }
-
-        // ==========================================================
-
-        // NEW
         // Save new profile update request
 
         public async Task SubmitRequestAsync(ProfileUpdateRequest request)
@@ -120,12 +93,7 @@ namespace OnlineBankingApplication.Repositories
             await _context.ProfileUpdateRequests.AddAsync(request);
         }
 
-        // ==========================================================
-        // ADMIN SIDE
-        // ==========================================================
-
-        // NEW
-        // Get all pending profile update requests
+        // Get all pending profile update requests for admin
 
         public async Task<List<ProfileUpdateRequest>> GetAllPendingRequestsAsync()
         {
@@ -135,23 +103,12 @@ namespace OnlineBankingApplication.Repositories
                 .OrderBy(x => x.RequestDate)
                 .ToListAsync();
         }
-
-        // ==========================================================
-
-        // NEW
-        // Get request by Id
-
         public async Task<ProfileUpdateRequest?> GetRequestByIdAsync(int requestId)
         {
             return await _context.ProfileUpdateRequests
                 .Include(x => x.Customer)
                 .FirstOrDefaultAsync(x => x.RequestId == requestId);
         }
-
-        // ==========================================================
-
-        // NEW
-        // Approve profile update request
 
         public async Task ApproveRequestAsync(int requestId,
                                               string approvedBy)
@@ -160,18 +117,13 @@ namespace OnlineBankingApplication.Repositories
 
             if (request == null)
                 return;
-
-            // -----------------------------------------
+            
             // Update customer table
-            // -----------------------------------------
-
             request.Customer.Phone = request.NewPhone;
 
             request.Customer.Address = request.NewAddress;
-
-            // -----------------------------------------
+           
             // Update request table
-            // -----------------------------------------
 
             request.Status = "Approved";
 
@@ -179,12 +131,6 @@ namespace OnlineBankingApplication.Repositories
 
             request.ApprovedBy = approvedBy;
         }
-
-        // ==========================================================
-
-        // NEW
-        // Reject request
-
         public async Task RejectRequestAsync(int requestId,
                                              string approvedBy)
         {
@@ -199,12 +145,6 @@ namespace OnlineBankingApplication.Repositories
 
             request.ApprovedBy = approvedBy;
         }
-
-        // ==========================================================
-
-        // NEW
-        // Save changes
-
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

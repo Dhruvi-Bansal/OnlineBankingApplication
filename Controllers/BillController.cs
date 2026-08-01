@@ -21,10 +21,6 @@ namespace OnlineBankingApplication.Controllers
             _userManager = userManager;
         }
 
-        //-----------------------------------------
-        // GET : Pay Bills
-        //-----------------------------------------
-
         [HttpGet]
         public IActionResult PayBills()
         {
@@ -33,10 +29,6 @@ namespace OnlineBankingApplication.Controllers
                 DueDate = DateOnly.FromDateTime(DateTime.Today)
             });
         }
-
-        //-----------------------------------------
-        // POST : Pay Bills
-        //-----------------------------------------
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,10 +56,6 @@ namespace OnlineBankingApplication.Controllers
                 new { id = result.TransactionId });
         }
 
-        //-----------------------------------------
-        // Payment History
-        //-----------------------------------------
-
         [HttpGet]
         public async Task<IActionResult> History()
         {
@@ -80,10 +68,6 @@ namespace OnlineBankingApplication.Controllers
 
             return View(history);
         }
-
-        //-----------------------------------------
-        // Receipt
-        //-----------------------------------------
 
         [HttpGet]
         public async Task<IActionResult> Receipt(long id)

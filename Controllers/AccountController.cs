@@ -134,7 +134,6 @@ namespace OnlineBankingApplication.Controllers
                 return View(model);
             }
 
-            // Skip approval check for Admin
             bool isAdmin = await _userManager.IsInRoleAsync(identityUser, "Admin");
 
             if (!isAdmin)
@@ -165,7 +164,7 @@ namespace OnlineBankingApplication.Controllers
                 }
             }
 
-            // Login
+            // Customer Login
             var result = await _signInManager.PasswordSignInAsync(
                 model.Email,
                 model.Password,
@@ -202,9 +201,7 @@ namespace OnlineBankingApplication.Controllers
         {
             return View();
         }
-        //=========================
-        // ADMIN LOGIN
-        //=========================
+        // Admin Login
 
         [HttpGet]
         public IActionResult AdminLogin()

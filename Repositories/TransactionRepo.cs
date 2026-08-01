@@ -12,11 +12,7 @@ namespace OnlineBankingApplication.Repositories
         public TransactionRepo(OnlineBankingDbContext context)
         {
             _context = context;
-        }
-
-        //----------------------------------------------------
-        // Generate Transaction Reference
-        //----------------------------------------------------
+        }        
 
         public string GenerateReferenceNo()
         {
@@ -24,11 +20,6 @@ namespace OnlineBankingApplication.Repositories
                    + DateTime.Now.ToString("yyyyMMddHHmmss")
                    + Random.Shared.Next(1000, 9999);
         }
-
-        //----------------------------------------------------
-        // Transfer Money
-        //----------------------------------------------------
-
         public async Task<bool> TransferMoney(
             string userId,
             string receiverAccountNumber,
@@ -38,23 +29,15 @@ namespace OnlineBankingApplication.Repositories
 
             using var transaction =
                 await _context.Database.BeginTransactionAsync();
-
-
             try
             {
-
                 var customer =
                     await _context.Customers
                     .FirstOrDefaultAsync(x =>
                         x.UserId == userId);
 
-
-
                 if (customer == null)
                     return false;
-
-
-
 
                 // Sender account
 
@@ -68,10 +51,6 @@ namespace OnlineBankingApplication.Repositories
 
                 if (senderAccount == null)
                     return false;
-
-
-
-
                 // Receiver account using account number
 
                 var receiverAccount =
@@ -80,116 +59,55 @@ namespace OnlineBankingApplication.Repositories
                         x.AccountNumber == receiverAccountNumber &&
                         x.Status == "Active");
 
-
-
                 if (receiverAccount == null)
                     return false;
-
-
-
 
                 // Same account transfer check
 
                 if (senderAccount.AccountId ==
                    receiverAccount.AccountId)
-
                     return false;
-
-
-
 
                 if (amount <= 0)
                     return false;
 
-
-
-
                 if (senderAccount.Balance < amount)
                     return false;
-
-
-
-
                 // Debit
 
                 senderAccount.Balance -= amount;
-
-
-
                 // Credit
 
                 receiverAccount.Balance += amount;
 
-
-
-
                 Transaction txn = new Transaction
                 {
-
-                    TransactionReference =
-                        GenerateReferenceNo(),
-
-
-                    SenderAccountId =
-                        senderAccount.AccountId,
-
-
-                    ReceiverAccountId =
-                        receiverAccount.AccountId,
-
-
+                    TransactionReference = GenerateReferenceNo(),
+                    SenderAccountId = senderAccount.AccountId,
+                    ReceiverAccountId = receiverAccount.AccountId,
                     Amount = amount,
-
-
-                    TransactionType =
-                        "Fund Transfer",
-
-
-                    Description =
-                        description,
-
-
-                    Status =
-                        "Success",
-
-
-                    TransactionDate =
-                        DateTime.Now
-
+                    TransactionType ="Fund Transfer",
+                    Description =  description,
+                    Status =  "Success",
+                    TransactionDate =DateTime.Now
                 };
-
-
 
                 _context.Transactions.Add(txn);
 
-
-
                 await _context.SaveChangesAsync();
 
-
-
                 await transaction.CommitAsync();
-
-
 
                 return true;
 
             }
             catch
-            {
-
-               
+            {  
                 await transaction.RollbackAsync();
-
                 return false ;
-
             }
 
         }
-
-        //----------------------------------------------------
-        // Transaction History
-        //----------------------------------------------------
 
         public async Task<List<Transaction>> GetTransactions(string userId)
         {
@@ -218,10 +136,7 @@ namespace OnlineBankingApplication.Repositories
                 .ToListAsync();
         }
 
-        //----------------------------------------------------
-        // Single Transaction
-        //----------------------------------------------------
-
+        // Get Transaction by ID
         public async Task<Transaction?> GetTransaction(long id)
         {
             return await _context.Transactions
