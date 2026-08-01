@@ -38,7 +38,11 @@ public partial class OnlineBankingDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+<<<<<<< HEAD
         => optionsBuilder.UseSqlServer("Server=DESKTOP-9JDC2HB\\SQLEXPRESS;Database=OnlineBankingDB;Trusted_Connection=True;TrustServerCertificate=True;");
+=======
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=OnlineBankingDB;Trusted_Connection=True;TrustServerCertificate=True;");
+>>>>>>> bdfbdb8 (Add Azure deployment workflow)
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
