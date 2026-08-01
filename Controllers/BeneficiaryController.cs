@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineBankingApplication.DAL;
 using OnlineBankingApplication.Models;
 using OnlineBankingApplication.Repositories;
 
@@ -10,22 +9,21 @@ namespace OnlineBankingApplication.Controllers
     public class BeneficiaryController : Controller
     {
         private readonly IBeneficiaryRepo _repo;
-        private readonly OnlineBankingDbContext _context;
+        private readonly ICustomerRepo _customerRepo;
 
         public BeneficiaryController(
             IBeneficiaryRepo repo,
-            OnlineBankingDbContext context)
+            ICustomerRepo customerRepo)
         {
             _repo = repo;
-            _context = context;
+            _customerRepo = customerRepo;
         }
 
         public async Task<IActionResult> Index()
         {
             string email = User.Identity!.Name!;
 
-            var customer = _context.Customers
-                .FirstOrDefault(x => x.Email == email);
+            var customer = await _customerRepo.GetCustomerByEmailAsync(email);
 
             if (customer == null)
                 return RedirectToAction("Login", "Account");
@@ -44,14 +42,12 @@ namespace OnlineBankingApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Beneficiary beneficiary)
         {
-
             if (!ModelState.IsValid)
                 return View(beneficiary);
 
             string email = User.Identity!.Name!;
 
-            var customer = _context.Customers
-                .FirstOrDefault(x => x.Email == email);
+            var customer = await _customerRepo.GetCustomerByEmailAsync(email);
 
             if (customer == null)
                 return RedirectToAction("Login", "Account");
@@ -64,16 +60,13 @@ namespace OnlineBankingApplication.Controllers
             if (validation != null)
             {
                 ModelState.AddModelError("", validation);
-
                 return View(beneficiary);
             }
 
             beneficiary.CustomerId = customer.CustomerId;
-
             beneficiary.AddedDate = DateTime.Now;
 
             await _repo.Add(beneficiary);
-
             await _repo.Save();
 
             TempData["Success"] = "Beneficiary added successfully.";
