@@ -79,10 +79,7 @@ namespace OnlineBankingApplication
             }
 
             // Configure HTTP Pipeline
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseDeveloperExceptionPage();
 
             app.UseRouting();
 
