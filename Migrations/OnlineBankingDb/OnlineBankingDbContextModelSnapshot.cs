@@ -395,6 +395,51 @@ namespace OnlineBankingApplication.Migrations.OnlineBankingDb
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("OnlineBankingApplication.Models.ProfileUpdateRequest", b =>
+                {
+                    b.Property<int>("RequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ApprovedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NewAddress")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NewPhone")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<DateTime>("RequestDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("Pending");
+
+                    b.HasKey("RequestId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("ProfileUpdateRequest", (string)null);
+                });
+
             modelBuilder.Entity("OnlineBankingApplication.Models.Transaction", b =>
                 {
                     b.Property<long>("TransactionId")
@@ -557,6 +602,17 @@ namespace OnlineBankingApplication.Migrations.OnlineBankingDb
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("OnlineBankingApplication.Models.ProfileUpdateRequest", b =>
+                {
+                    b.HasOne("OnlineBankingApplication.Models.Customer", "Customer")
+                        .WithMany("ProfileUpdateRequests")
+                        .HasForeignKey("CustomerId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ProfileUpdateRequest_Customer");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("OnlineBankingApplication.Models.Transaction", b =>
                 {
                     b.HasOne("OnlineBankingApplication.Models.BankAccount", "ReceiverAccount")
@@ -595,6 +651,8 @@ namespace OnlineBankingApplication.Migrations.OnlineBankingDb
                     b.Navigation("BankAccounts");
 
                     b.Navigation("Beneficiaries");
+
+                    b.Navigation("ProfileUpdateRequests");
                 });
 
             modelBuilder.Entity("OnlineBankingApplication.Models.Transaction", b =>
