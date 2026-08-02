@@ -63,11 +63,11 @@ namespace OnlineBankingApplication
 
             var app = builder.Build();
 
-            // Seed Roles & Admin
-            using (var scope = app.Services.CreateScope())
-            {
-                await DbInitializer.Seed(scope.ServiceProvider);
-            }
+            //// Seed Roles & Admin
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    await DbInitializer.Seed(scope.ServiceProvider);
+            //}
 
 
             // Configure HTTP Pipeline
