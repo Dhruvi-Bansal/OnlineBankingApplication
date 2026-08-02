@@ -1,0 +1,26 @@
+* [33m7bf80fb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m seed  comment
+*   [33m2f7ebb3[m Merge branch 'master' of https://github.com/Dhruvi-Bansal/OnlineBankingApplication
+[32m|[m[33m\[m  
+[32m|[m * [33m1b9403c[m Update deployment branch to include master
+* [33m|[m [33m270611b[m update
+[33m|[m[33m/[m  
+* [33ma12ed9f[m Merge new-branch into master
+*   [33mb899728[m Merge branch 'master' of https://github.com/Dhruvi-Bansal/OnlineBankingApplication
+[34m|[m[35m\[m  
+[34m|[m * [33m060a4a4[m Enhance Azure workflow with step names for clarity
+[34m|[m * [33ma183765[m Update azure-webapps.yml
+[34m|[m * [33ma4e2058[m Update Azure Web Apps workflow for new branch and app name
+[34m|[m * [33m1916181[m Add Azure Web Apps deployment workflow
+* [35m|[m [33md5d4180[m resolve commit
+[35m|[m[35m/[m  
+* [33m972aa11[m correct
+[35m|[m * [33m532382b[m[33m ([m[1;31morigin/new-branch[m[33m, [m[1;32mnew-branch[m[33m)[m update
+[35m|[m * [33m89f96a6[m Add Azure deployment workflow
+[35m|[m * [33m00496f9[m removed  api key and  updated beneficiary
+[35m|[m * [33mc99b134[m Made minor changes
+[35m|[m * [33m3068423[m Few changes
+[35m|[m [36m|[m *   [33m046e508[m[33m ([m[1;35mrefs/stash[m[33m)[m On new-branch: Checking out master
+[35m|[m [36m|[m[36m/[m[1;32m|[m[1;33m\[m  
+[35m|[m [36m|[m [1;32m|[m * [33m10e603d[m untracked files on new-branch: 2609a64 added ai assistant
+[35m|[m [36m|[m * [33m8926116[m index on new-branch: 2609a64 added ai assistant
+[35m|[m [36m|[m[36m/[m  
