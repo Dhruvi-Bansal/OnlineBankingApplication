@@ -104,6 +104,7 @@ namespace OnlineBankingApplication.Controllers
 
             await _accountRepo.CreateAccountAsync(account);
 
+
             await _customerRepo.SaveAsync();
             await _accountRepo.SaveAsync();
 
